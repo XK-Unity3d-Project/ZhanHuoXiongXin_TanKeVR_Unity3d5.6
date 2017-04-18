@@ -47,7 +47,10 @@ public class XKSpawnNpcPoint : MonoBehaviour {
 	// Use this for initialization
 	void Awake()
 	{
-		PointType = SpawnPointType.KongZhong;
+        if (XkGameCtrl.GameJiTaiSt == GameJiTaiType.FeiJiJiTai) {
+            PointType = SpawnPointType.KongZhong;
+        }
+
 		if (HuoCheNpcTran != null) {
 			HuoCheNpcTran.gameObject.SetActive(false);
 		}
