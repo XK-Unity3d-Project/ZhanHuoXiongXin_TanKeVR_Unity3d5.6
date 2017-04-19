@@ -264,8 +264,8 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			isSpawnGaoBaoDan = true;
 			if (GaoBaoAmmoParticle[0] != null) {
 				obj = (GameObject)Instantiate(GaoBaoAmmoParticle[0], ammoSpawnPos, AmmoStartPosOne[0].rotation);
-				obj.transform.parent = XkGameCtrl.PlayerAmmoArray;
-				XkGameCtrl.CheckObjDestroyThisTimed(obj);
+				obj.transform.parent = AmmoStartPosOne[0];
+                XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 			XkGameCtrl.GetInstance().SubGaoBaoDanNumPOne();
 			obj = GetPlayerAmmo(PlayerAmmoType.GaoBaoAmmo, ammoSpawnPos, AmmoStartPosOne[0].rotation);
@@ -420,8 +420,8 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			isSpawnGaoBaoDan = true;
 			if (GaoBaoAmmoParticle[0] != null) {
 				obj = (GameObject)Instantiate(GaoBaoAmmoParticle[0], ammoSpawnPos, AmmoStartPosTwo[0].rotation);
-				obj.transform.parent = XkGameCtrl.PlayerAmmoArray;
-				XkGameCtrl.CheckObjDestroyThisTimed(obj);
+				obj.transform.parent = AmmoStartPosTwo[0];
+                XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 			XkGameCtrl.GetInstance().SubGaoBaoDanNumPTwo();
 			obj = GetPlayerAmmo(PlayerAmmoType.GaoBaoAmmo, ammoSpawnPos, AmmoStartPosTwo[0].rotation);
