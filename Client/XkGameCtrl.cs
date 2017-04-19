@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -538,9 +538,9 @@ public class XkGameCtrl : MonoBehaviour {
 						XkPlayerCtrl.GetInstanceFeiJi().RestartMovePlayer();
 					}
 					
-//					if (XkPlayerCtrl.GetInstanceTanKe() != null) {
-//						XkPlayerCtrl.GetInstanceTanKe().RestartMovePlayer();
-//					}
+					if (XkPlayerCtrl.GetInstanceTanKe() != null) {
+						XkPlayerCtrl.GetInstanceTanKe().RestartMovePlayer();
+					}
 //					XKCameraMapCtrl.GetInstance().SetCameraMapState(); //test
 				}
 				else {
@@ -552,6 +552,10 @@ public class XkGameCtrl : MonoBehaviour {
 				//AddStartMovePlayerCount();
 				if (XkPlayerCtrl.GetInstanceFeiJi() != null) {
 					XkPlayerCtrl.GetInstanceFeiJi().RestartMovePlayer();
+				}
+					
+				if (XkPlayerCtrl.GetInstanceTanKe() != null) {
+					XkPlayerCtrl.GetInstanceTanKe().RestartMovePlayer();
 				}
 			}
 			break;
@@ -594,24 +598,23 @@ public class XkGameCtrl : MonoBehaviour {
 
 	void DelaySpawnNetPlayer()
 	{
-		NetworkServerNet.GetInstance().SpawnNetPlayerObj(FeiJiPlayer,
-		                                                 FeiJiPlayerPath,
-		                                                 FeiJiPlayerMark.transform.position,
-		                                                 FeiJiPlayerMark.transform.rotation);
-//		Vector3 posPlayerFJ = new Vector3(0f, -1700f, 0f);
-//		Vector3 posPlayerTK = new Vector3(0f, -1500f, 0f);
-//		if (GameTypeCtrl.AppTypeStatic == AppGameType.LianJiFeiJi) {
-//			NetworkServerNet.GetInstance().SpawnNetPlayerObj(FeiJiPlayer,
-//			                                                 	FeiJiPlayerPath,
-//				                                                FeiJiPlayerMark.transform.position,
-//				                                                FeiJiPlayerMark.transform.rotation);
-//		}
-//		else if (GameTypeCtrl.AppTypeStatic == AppGameType.LianJiTanKe) {
-//			NetworkServerNet.GetInstance().SpawnNetPlayerObj(TanKePlayer,
-//			                                                      TanKePlayerPath,
-//			                                                      posPlayerTK,
-//			                                                      TanKePlayer.transform.rotation);
-//		}
+		//NetworkServerNet.GetInstance().SpawnNetPlayerObj(FeiJiPlayer,
+		//                                                 FeiJiPlayerPath,
+		//                                                 FeiJiPlayerMark.transform.position,
+		//                                                 FeiJiPlayerMark.transform.rotation);
+        
+		if (!GameTypeCtrl.IsTankVRStatic) {
+			NetworkServerNet.GetInstance().SpawnNetPlayerObj(FeiJiPlayer,
+			                                                 	FeiJiPlayerPath,
+				                                                FeiJiPlayerMark.transform.position,
+				                                                FeiJiPlayerMark.transform.rotation);
+		}
+        else {
+			NetworkServerNet.GetInstance().SpawnNetPlayerObj(TanKePlayer,
+			                                                    TanKePlayerPath,
+                                                                TanKePlayerMark.transform.position,
+                                                                TanKePlayerMark.transform.rotation);
+        }
 	}
 
 	void Update()

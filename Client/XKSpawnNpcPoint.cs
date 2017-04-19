@@ -298,17 +298,19 @@ public class XKSpawnNpcPoint : MonoBehaviour {
 			}
 		}
 		else {
-			switch (Network.connections.Length) {
-			case 0:
-				if (PointPlayerSt == PlayerEnum.PlayerTwo && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerOne) {
-					return;
-				}
+            if (!GameTypeCtrl.IsTankVRStatic) {
+                switch (Network.connections.Length) {
+			    case 0:
+				    if (PointPlayerSt == PlayerEnum.PlayerTwo && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerOne) {
+					    return;
+				    }
 
-				if (PointPlayerSt == PlayerEnum.PlayerOne && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerTwo) {
-					return;
-				}
-				break;
-			}
+				    if (PointPlayerSt == PlayerEnum.PlayerOne && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerTwo) {
+					    return;
+				    }
+				    break;
+			    }
+            }
 		}
 
 		if (ScreenDanHeiCtrl.IsStartGame) {

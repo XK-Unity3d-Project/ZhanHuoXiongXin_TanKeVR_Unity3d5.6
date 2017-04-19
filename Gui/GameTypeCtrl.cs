@@ -14,7 +14,9 @@ public enum AppGameType
 public class GameTypeCtrl : MonoBehaviour {
 	//public AppGameType AppType = AppGameType.Null;
 	public GameObject NetCtrlObj;
-	public static AppGameType AppTypeStatic = AppGameType.Null;
+    public bool IsTankVR = true;
+    public static bool IsTankVRStatic = true;
+    public static AppGameType AppTypeStatic = AppGameType.Null;
 	public static bool IsServer;
 	public static GameTypeCtrl Instance;
 	string ServerIp = "";
@@ -25,7 +27,8 @@ public class GameTypeCtrl : MonoBehaviour {
 	void Awake()
 	{
 		Instance = this;
-		if (pcvr.bIsHardWare) {
+        IsTankVRStatic = IsTankVR;
+        if (pcvr.bIsHardWare) {
 			ServerIp = NetworkServerNet.ServerPortIP;
 		}
 		else {
@@ -65,15 +68,16 @@ public class GameTypeCtrl : MonoBehaviour {
 
 	public static void SetAppTypeVal(AppGameType val)
 	{
-		AppTypeStatic = val;
 		switch (val) {
 		case AppGameType.LianJiServer:
 			IsServer = true;
 			break;
 		default:
 			IsServer = false;
-			break;
+            val = IsTankVRStatic == true ? AppGameType.LianJiTanKe : AppGameType.LianJiFeiJi;
+            break;
 		}
+		AppTypeStatic = val;
 	}
 
 //	void Update()
