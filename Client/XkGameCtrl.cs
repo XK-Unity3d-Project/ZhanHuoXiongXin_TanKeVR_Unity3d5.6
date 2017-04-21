@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum NpcJiFenEnum
@@ -162,7 +162,7 @@ public class XkGameCtrl : MonoBehaviour {
 	public static bool IsGameOnQuit;
 	public static bool IsDrawGizmosObj = true;
 	public static int AmmoNumMaxNpc = 30;
-	public bool IsOpenVR;
+	public bool IsOpenVR = true;
 	public static int TestGameEndLv = (int)GameLevel.Scene_2;
 	public static bool IsTiaoGuoStartCartoon = true;
 	static XkGameCtrl _Instance;

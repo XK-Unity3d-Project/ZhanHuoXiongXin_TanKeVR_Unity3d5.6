@@ -142,13 +142,20 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 //			float disVal = Vector3.Distance(AmmoEndPos, AmmoStartPos) + 10f;
 //			Physics.Raycast(AmmoStartPos, forwardVal, out hit, disVal, PlayerAmmoHitLayer);
 
-			float disAmmoOffset = AmmoSanSheDis;
-			float randKay  = Random.Range(0, 100) % 2 == 0 ? -1 : 1;
-			Vector3 upVal = randKay * Random.Range(0f, disAmmoOffset) * transform.up;
-			randKay  = Random.Range(0, 100) % 2 == 0 ? -1 : 1;
-			Vector3 rightVal = randKay * Random.Range(0f, disAmmoOffset) * transform.right;
+			Vector3 startPos =  Vector3.zero;
 			Vector3 backVal = -10f * transform.forward;
-			Vector3 startPos = transform.position + upVal + rightVal + backVal;
+			if (GameTypeCtrl.IsTankVRStatic) {
+				startPos = transform.position + backVal;
+			}
+			else {
+				float disAmmoOffset = AmmoSanSheDis;
+				float randKay  = Random.Range(0, 100) % 2 == 0 ? -1 : 1;
+				Vector3 upVal = randKay * Random.Range(0f, disAmmoOffset) * transform.up;
+				randKay  = Random.Range(0, 100) % 2 == 0 ? -1 : 1;
+				Vector3 rightVal = randKay * Random.Range(0f, disAmmoOffset) * transform.right;
+				startPos = transform.position + upVal + rightVal + backVal;
+			}
+
 			Physics.Raycast(startPos, transform.forward, out hit, 20f, PlayerAmmoHitLayer);
 			if (hit.collider != null) {
 				hitPos = hit.point;
