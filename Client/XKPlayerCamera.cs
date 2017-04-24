@@ -12,6 +12,8 @@ public class XKPlayerCamera : MonoBehaviour {
 //	float LeaveNpcSpeed = 0.1f;
 	float GenZongTmpVal = 0.0001f;
 	float GenZongCamRotVal = 0.2f;
+	float GenZongCamTKRotVal = 1.2f;
+	float GenZongCamTKPosVal = 2.5f;
 	float GenZongCamPosVal = 0.005f;
 	bool IsChangeSpeedOutAim;
 	public static Transform FeiJiCameraTan;
@@ -133,6 +135,12 @@ public class XKPlayerCamera : MonoBehaviour {
 			}
 		}
 		XKGlobalData.GetInstance().PlayGuanKaBeiJingAudio();
+
+		if (GameTypeCtrl.IsTankVRStatic && CameraVRObj != null) {
+			for (int i = 0; i < CameraVRObj.Length; i++) {
+				CameraVRObj [i].transform.parent = null;
+			}
+		}
 	}
 
 //	public Transform DpnVrCamTr;
@@ -415,7 +423,7 @@ public class XKPlayerCamera : MonoBehaviour {
 					CameraTran.rotation = CameraParent.rotation;
 				}
 				else {
-					CameraTran.position = Vector3.Lerp(CameraTran.position, CameraParent.position, Time.deltaTime);
+					CameraTran.position = Vector3.Lerp(CameraTran.position, CameraParent.position, GenZongCamTKPosVal * Time.deltaTime);
 				}
 			}
 		}
@@ -431,6 +439,7 @@ public class XKPlayerCamera : MonoBehaviour {
 				ServerPortCameraCtrl.GetInstanceTK().CheckCameraFollowTran();
 			}
 		}
+		UpdateTankVRCamInfo();
 	}
 
 	void SmothChangeCameraRot()
@@ -474,8 +483,8 @@ public class XKPlayerCamera : MonoBehaviour {
 					}
 					else {
 						CameraTran.rotation = Quaternion.Lerp(CameraTran.rotation,
-						                                      CameraParent.rotation,
-						                                      GenZongCamRotVal * Time.deltaTime);
+						                                      	CameraParent.rotation,
+																GenZongCamTKRotVal * Time.deltaTime);
 					}
 				}
 			}
@@ -638,6 +647,20 @@ public class XKPlayerCamera : MonoBehaviour {
 			CameraTran.position = CameraParent.position;
 			CameraTran.rotation = CameraParent.rotation;
 			break;
+		}
+	}
+
+	void UpdateTankVRCamInfo()
+	{
+		if (!GameTypeCtrl.IsTankVRStatic) {
+			return;
+		}
+
+		for (int i = 0; i < CameraVRObj.Length; i++) {
+			if (CameraVRObj[i].activeSelf) {
+				CameraVRObj[i].transform.position = CameraTran.position;
+				CameraVRObj[i].transform.rotation = CameraTran.rotation;
+			}
 		}
 	}
 }
