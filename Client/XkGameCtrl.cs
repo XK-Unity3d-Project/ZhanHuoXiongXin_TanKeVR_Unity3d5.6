@@ -354,7 +354,10 @@ public class XkGameCtrl : MonoBehaviour {
 
 		case GameMode.DanJiTanKe:
 			GameJiTaiSt = GameJiTaiType.TanKeJiTai; //test
-			obj = (GameObject)Instantiate(TanKePlayer, posPlayerTK, TanKePlayerTran.rotation);
+			//obj = (GameObject)Instantiate(TanKePlayer, posPlayerTK, TanKePlayerTran.rotation);
+			obj = (GameObject)Instantiate(TanKePlayer,
+											TanKePlayerMark.transform.position,
+											TanKePlayerMark.transform.rotation);
 			playerScript = obj.GetComponent<XkPlayerCtrl>();
 			playerScript.SetAiPathScript(TanKePlayerPath);
 //			PlayerTranCurrent = obj.transform;
