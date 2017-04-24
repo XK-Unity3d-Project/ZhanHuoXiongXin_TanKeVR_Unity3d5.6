@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class XKPlayerGunRotCtrl : MonoBehaviour
 {
 	public PlayerEnum PlayerSt = PlayerEnum.PlayerOne;
+	//坦克vr主炮炮管.
+	public Transform TankPG;
+	//坦克vr主炮炮台.
+	public Transform TankPT;
+	//坦克vr隐藏实体枪.
+	public GameObject[] HiddenGunObj;
 	public Transform PlayerGunTr;
 	public Transform PlayerMainCamTr;
 	float MaxPX = 0f;
@@ -36,13 +42,20 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 		}
 		MaxPX = Screen.width;
 		MaxPY = Screen.height;
-	}
+
+        if (HiddenGunObj != null && GameTypeCtrl.IsTankVRStatic) {
+			for (int i = 0; i < HiddenGunObj.Length; i++) {
+				HiddenGunObj[i].SetActive(false);
+			}
+        }
+    }
 
 	// Update is called once per frame
 	void Update()
 	{
 		//UpdatePlayerMainCamera();
 		UpdatePlayerGunRot();
+		UpdateTankZhuPaoTr();
 	}
 
 	void UpdatePlayerMainCamera()
@@ -83,8 +96,17 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 		}
 	}
 
-	public void SetActivePlayerGun()
+	void UpdateTankZhuPaoTr()
 	{
-
+		if (!GameTypeCtrl.IsTankVRStatic) {
+			return;
+		}
+		Vector3 gunEA = PlayerGunTr.localEulerAngles;
+		Vector3 paoTaiEA = Vector3.zero;
+		Vector3 paoGuanEA = Vector3.zero;
+		paoTaiEA.y = gunEA.y;
+		paoGuanEA.x = gunEA.x;
+		TankPT.localEulerAngles = paoTaiEA;
+		TankPG.localEulerAngles = paoGuanEA;
 	}
 }
