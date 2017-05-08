@@ -319,7 +319,11 @@ public class XKSpawnNpcPoint : MonoBehaviour {
 				return;
 			}
 
-			if (XkGameCtrl.GameModeVal == GameMode.LianJi && PointType == SpawnPointType.KongZhong) {
+			if (XkGameCtrl.GameModeVal == GameMode.LianJi && PointType == SpawnPointType.KongZhong && GameTypeCtrl.IsTankVRStatic) {
+				return;
+			}
+
+			if (XkGameCtrl.GameModeVal == GameMode.LianJi && PointType == SpawnPointType.DiMian && !GameTypeCtrl.IsTankVRStatic) {
 				return;
 			}
 			
