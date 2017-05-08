@@ -94,7 +94,7 @@ public class XKNpcHealthCtrl : MonoBehaviour {
 			if (HiddenNpcObjArray[i].activeSelf) {
 				XKNpcAnimatorCtrl aniScript = HiddenNpcObjArray[i].GetComponent<XKNpcAnimatorCtrl>();
 				if (aniScript != null) {
-					aniScript.ResetNpcAnimation();
+					aniScript.ResetNpcAnimation(1);
 				}
 				HiddenNpcObjArray[i].SetActive(false);
 			}

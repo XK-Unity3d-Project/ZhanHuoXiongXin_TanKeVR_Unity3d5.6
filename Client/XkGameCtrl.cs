@@ -67,7 +67,7 @@ public class XkGameCtrl : MonoBehaviour {
 	 */
 	[Range(1, 1000)] public int LJSRTKYouLiangDianMin = 50;
 	int YouLiangDianVal;
-	[Range(1, 99)] public int DaoDanNum = 50;
+	[Range(1, 99999)] public int DaoDanNum = 50;
 	public GameObject FeiJiPlayer;
 	public AiMark FeiJiPlayerMark;
 	Transform FeiJiPlayerTran;

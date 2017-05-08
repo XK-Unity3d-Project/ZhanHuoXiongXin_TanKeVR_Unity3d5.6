@@ -298,24 +298,28 @@ public class XKSpawnNpcPoint : MonoBehaviour {
 			}
 		}
 		else {
-            if (!GameTypeCtrl.IsTankVRStatic) {
-                switch (Network.connections.Length) {
-			    case 0:
-				    if (PointPlayerSt == PlayerEnum.PlayerTwo && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerOne) {
-					    return;
-				    }
+			if (!GameTypeCtrl.IsTankVRStatic) {
+				switch (Network.connections.Length) {
+				case 0:
+					if (PointPlayerSt == PlayerEnum.PlayerTwo && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerOne) {
+						return;
+					}
 
-				    if (PointPlayerSt == PlayerEnum.PlayerOne && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerTwo) {
-					    return;
-				    }
-				    break;
-			    }
-            }
+					if (PointPlayerSt == PlayerEnum.PlayerOne && GameTypeCtrl.PlayerPCState == PlayerEnum.PlayerTwo) {
+						return;
+					}
+					break;
+				}
+			}
 		}
 
 		if (ScreenDanHeiCtrl.IsStartGame) {
 			if ((XkGameCtrl.GameModeVal == GameMode.DanJiFeiJi && PointType == SpawnPointType.DiMian)
 			    || (XkGameCtrl.GameModeVal == GameMode.DanJiTanKe && PointType == SpawnPointType.KongZhong)) {
+				return;
+			}
+
+			if (XkGameCtrl.GameModeVal == GameMode.LianJi && PointType == SpawnPointType.KongZhong) {
 				return;
 			}
 			
