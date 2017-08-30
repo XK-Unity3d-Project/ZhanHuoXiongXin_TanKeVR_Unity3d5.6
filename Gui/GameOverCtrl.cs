@@ -58,5 +58,5 @@ public enum GameLevel
 	Scene_2,
 	Scene_3,
 	Scene_4,
-	SetPanel = Scene_2,
+	SetPanel = Scene_3,
 }

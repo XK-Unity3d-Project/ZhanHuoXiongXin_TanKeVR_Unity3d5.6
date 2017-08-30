@@ -286,14 +286,14 @@ public class XKSpawnNpcPoint : MonoBehaviour {
 		if (Network.peerType == NetworkPeerType.Disconnected) {
 			switch (PointPlayerSt) {
 			case PlayerEnum.PlayerOne:
-				if (!XkGameCtrl.IsActivePlayerOne) {
-					return;
-				}
+                //if (!XkGameCtrl.IsActivePlayerOne) {
+                //    return;
+                //}
 				break;
 			case PlayerEnum.PlayerTwo:
-				if (!XkGameCtrl.IsActivePlayerTwo) {
-					return;
-				}
+                //if (!XkGameCtrl.IsActivePlayerTwo) {
+                //    return;
+                //}
 				break;
 			}
 		}

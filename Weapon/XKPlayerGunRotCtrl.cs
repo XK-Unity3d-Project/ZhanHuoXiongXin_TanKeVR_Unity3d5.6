@@ -75,7 +75,8 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 
 		Vector3 mousePosInput = Input.mousePosition;
 		if (pcvr.bIsHardWare) {
-			mousePosInput = pcvr.CrossPositionOne;
+            //mousePosInput = pcvr.CrossPositionOne;
+            mousePosInput = pcvr.CrossPositionTwo;
 		}
 		CurPX = mousePosInput.x;
 		CurPY = mousePosInput.y;

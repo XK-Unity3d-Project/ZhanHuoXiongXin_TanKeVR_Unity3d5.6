@@ -81,14 +81,18 @@ QiNangStateFJ[3] -> 右气囊
 				QiNangStateTK[2] = 0;
 				QiNangStateTK[3] = 1;
 				pcvr.OpenQiNangYou();
-				pcvr.CloseQiNangZuo();
+                pcvr.CloseQiNangZuo();
+                pcvr.OpenQiNangQian();
+                pcvr.CloseQiNangHou();
 			}
 			else if (eulerAngleZ < 0f) {
 				//左气囊充气,右气囊放气.
 				QiNangStateTK[2] = 1;
 				QiNangStateTK[3] = 0;
 				pcvr.OpenQiNangZuo();
-				pcvr.CloseQiNangYou();
+                pcvr.CloseQiNangYou();
+                pcvr.OpenQiNangHou();
+                pcvr.CloseQiNangQian();
 			}
 		}
 		else  if (PlayerSt == PlayerTypeEnum.FeiJi) {

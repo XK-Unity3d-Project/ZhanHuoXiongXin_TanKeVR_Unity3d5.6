@@ -41,9 +41,9 @@ public class XKTriggerSpawnNpc : MonoBehaviour {
 			}
 		}
 		
-		if (Network.peerType == NetworkPeerType.Client) {
-			return;
-		}
+        //if (Network.peerType == NetworkPeerType.Client) {
+        //    return;
+        //}
 
 		XkPlayerCtrl ScriptPlayer = other.GetComponent<XkPlayerCtrl>();
 		if (ScriptPlayer == null) {

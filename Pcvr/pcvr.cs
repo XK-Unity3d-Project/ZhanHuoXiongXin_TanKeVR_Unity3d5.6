@@ -159,9 +159,9 @@ public class pcvr : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if (GameTypeCtrl.AppTypeStatic == AppGameType.LianJiServer) {
-			return;
-		}
+        //if (GameTypeCtrl.AppTypeStatic == AppGameType.LianJiServer) {
+        //    return;
+        //}
 
 		CheckCrossPositionPOne();
 		CheckCrossPositionPTwo();

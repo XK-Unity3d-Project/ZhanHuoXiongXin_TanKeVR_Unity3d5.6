@@ -55,7 +55,8 @@ public class XKPlayerCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start()
-	{	
+	{
+		TimeLastVRCam = Time.time;
 		CameraObj = gameObject;
 		PlayerCamera = GetComponent<Camera>();
 		PlayerCamera.targetTexture = null;
@@ -650,16 +651,23 @@ public class XKPlayerCamera : MonoBehaviour {
 		}
 	}
 
+	float TimeLastVRCam;
 	void UpdateTankVRCamInfo()
 	{
 		if (!GameTypeCtrl.IsTankVRStatic) {
 			return;
 		}
 
+		if (Time.time - TimeLastVRCam < 2f) {
+			return;
+		}
+
 		for (int i = 0; i < CameraVRObj.Length; i++) {
 			if (CameraVRObj[i].activeSelf) {
-				CameraVRObj[i].transform.position = CameraTran.position;
-				CameraVRObj[i].transform.rotation = CameraTran.rotation;
+				//CameraVRObj[i].transform.position = CameraTran.position;
+				//CameraVRObj[i].transform.rotation = CameraTran.rotation;
+				CameraVRObj[i].transform.position = Vector3.Lerp(CameraVRObj[i].transform.position, CameraTran.position, 0.5f);
+				CameraVRObj[i].transform.rotation = Quaternion.Lerp(CameraVRObj[i].transform.rotation, CameraTran.rotation, 0.5f);
 			}
 		}
 	}

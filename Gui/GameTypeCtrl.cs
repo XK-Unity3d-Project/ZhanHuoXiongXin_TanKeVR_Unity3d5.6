@@ -77,7 +77,8 @@ public class GameTypeCtrl : MonoBehaviour {
             val = IsTankVRStatic == true ? AppGameType.LianJiTanKe : AppGameType.LianJiFeiJi;
             break;
 		}
-		AppTypeStatic = val;
+        //AppTypeStatic = val;
+        AppTypeStatic = AppGameType.DanJiTanKe;
 	}
 
 //	void Update()
@@ -109,7 +110,7 @@ public class GameTypeCtrl : MonoBehaviour {
 			return;
 		}
 
-		XKCheckGameServerIP.CheckServerIP();
+		//XKCheckGameServerIP.CheckServerIP();
 	}
 
 	public void DelayResetFullScreen()

@@ -354,7 +354,7 @@ public class XkGameCtrl : MonoBehaviour {
 			GameJiTaiSt = GameJiTaiType.TanKeJiTai; //test
 			//obj = (GameObject)Instantiate(TanKePlayer, posPlayerTK, TanKePlayerTran.rotation);
 			obj = (GameObject)Instantiate(TanKePlayer,
-											TanKePlayerMark.transform.position,
+											TanKePlayerMark.transform.position + new Vector3(0f, 0.8f, 0f),
 											TanKePlayerMark.transform.rotation);
 			playerScript = obj.GetComponent<XkPlayerCtrl>();
 			playerScript.SetAiPathScript(TanKePlayerPath);
@@ -950,6 +950,10 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void AddDaoDanNum(PlayerEnum playerSt)
 	{
+		if (IsOpenVR) {
+			return;
+		}
+
 		switch(playerSt) {
 		case PlayerEnum.PlayerOne:
 			DaoDanNumPOne += DaoDanBuJiNum;
@@ -1062,11 +1066,17 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void SubDaoDanNumPOne()
 	{
+		if (IsOpenVR) {
+			return;
+		}
 		DaoDanNumPOne--;
 	}
 	
 	public void SubDaoDanNumPTwo()
 	{
+		if (IsOpenVR) {
+			return;
+		}
 		DaoDanNumPTwo--;
 	}
 
@@ -1510,7 +1520,26 @@ public class XkGameCtrl : MonoBehaviour {
 			XKFinishTaskVRCtrl.GetInstance().ShowFinishTask();
 		}
 		else {
-			LoadingGameMovie();
+            if (SceneManager.GetActiveScene().buildIndex < (int)GameLevel.Scene_2
+                && SceneManager.GetActiveScene().buildIndex < (Application.levelCount - 1)
+                && !GameOverCtrl.IsShowGameOver) {
+                int loadLevel = SceneManager.GetActiveScene().buildIndex + 1;
+                Debug.Log("loadLevel *** "+loadLevel);
+                XkGameCtrl.IsLoadingLevel = true;
+                if (NetCtrl.GetInstance() != null) {
+                    NetCtrl.GetInstance().ResetGameInfo();
+                }
+                LoadingGameCtrl.ResetLoadingInfo();
+
+                if (!XkGameCtrl.IsGameOnQuit) {
+                    System.GC.Collect();
+                    SceneManager.LoadScene(loadLevel);
+                }
+            }
+            else {
+                //loading movie scene.
+                LoadingGameMovie();
+            }
 		}
 	}
 	
@@ -1950,7 +1979,8 @@ public class XkGameCtrl : MonoBehaviour {
 		string infoJ = "QiNangTK: Q "+XKPlayerDongGanCtrl.QiNangStateTK[0]
 		+", H "+XKPlayerDongGanCtrl.QiNangStateTK[1]
 		+", Z "+XKPlayerDongGanCtrl.QiNangStateTK[2]
-		+", Y "+XKPlayerDongGanCtrl.QiNangStateTK[3];
+		+", Y "+XKPlayerDongGanCtrl.QiNangStateTK[3]
+        +", qn0 " +pcvr.QiNangArray[0];
 		GUI.Box(new Rect(0f, hight*7f, width, hight), infoJ);
 
 		string infoK = "QiNangFJ: Q "+XKPlayerDongGanCtrl.QiNangStateFJ[0]

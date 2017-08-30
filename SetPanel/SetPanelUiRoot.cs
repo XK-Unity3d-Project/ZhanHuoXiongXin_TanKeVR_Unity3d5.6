@@ -4,7 +4,11 @@ using System;
 using UnityEngine.SceneManagement;
 
 public class SetPanelUiRoot : MonoBehaviour {
-
+    public bool IsOpenVR = true;
+    /// <summary>
+    /// VR摄像机对象.
+    /// </summary>
+    public Transform VRCameraTr;
 	public UILabel CoinStartLabel;
 	public UILabel CoinCurLabel;
 	public UISprite DuiGouDiffLow;
@@ -180,6 +184,21 @@ public class SetPanelUiRoot : MonoBehaviour {
 	void Start()
 	{
 		_Instance = this;
+        if (GameMovieCtrl.IsActivePlayer)
+        {
+            IsOpenVR = GameMovieCtrl.IsOpenVR;
+        }
+
+        if (IsOpenVR)
+        {
+            Transform trRoot = transform.root;
+            trRoot.parent = VRCameraTr;
+            trRoot.localPosition = new Vector3(0f, 0f, 3f);
+        }
+        else
+        {
+            VRCameraTr.gameObject.SetActive(false);
+        }
 		AudioListener.volume = 1f;
 		Time.timeScale = 1.0f;
 		
@@ -202,7 +221,8 @@ public class SetPanelUiRoot : MonoBehaviour {
 
 			if (GameTypeCtrl.AppTypeStatic == AppGameType.LianJiServer
 			    || GameTypeCtrl.AppTypeStatic == AppGameType.Null) {
-				GameJiTai = GameJiTaiType.FeiJiJiTai;
+				//GameJiTai = GameJiTaiType.FeiJiJiTai;
+                GameJiTai = GameJiTaiType.TanKeJiTai;
 			}
 		}
 		GameOverCtrl.IsShowGameOver = false;
@@ -1050,7 +1070,7 @@ public class SetPanelUiRoot : MonoBehaviour {
 			if (GameJiTai == GameJiTaiType.TanKeJiTai) {
 				switch (selDtState) {
 				case SelectSetGameDt.GameDiffDi:
-					StarMoveCount = (int)SelectSetGameDt.GameDiffGao;
+                    StarMoveCount = (int)SelectSetGameDt.GunShakeP1;
 					break;
 
 				case SelectSetGameDt.GameModeYunYing:
@@ -1059,7 +1079,19 @@ public class SetPanelUiRoot : MonoBehaviour {
 					
 				case SelectSetGameDt.GameLanguageCh:
 					StarMoveCount = (int)SelectSetGameDt.GameLanguageEn;
-					break;
+                    break;
+
+                case SelectSetGameDt.Exit:
+                    StarMoveCount = (int)SelectSetGameDt.GunAdjustP1;
+                    break;
+
+                case SelectSetGameDt.GameAudioReset:
+                    StarMoveCount = (int)SelectSetGameDt.DianJiSpeedP2;
+                    break;
+
+                case SelectSetGameDt.QiNangTest1:
+                    StarMoveCount = (int)SelectSetGameDt.Null;
+                    break;
 				}
 			}
 

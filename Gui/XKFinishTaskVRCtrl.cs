@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class XKFinishTaskVRCtrl : MonoBehaviour
 {
@@ -41,7 +42,25 @@ public class XKFinishTaskVRCtrl : MonoBehaviour
 	void OnFinishTaskAlphaToEnd()
 	{
 		VRCameraObj.SetActive(false);
-		//loading movie scene.
-		XkGameCtrl.LoadingGameMovie();
+        if (SceneManager.GetActiveScene().buildIndex < (int)GameLevel.Scene_2
+            && SceneManager.GetActiveScene().buildIndex < (Application.levelCount - 1)
+            && !GameOverCtrl.IsShowGameOver) {
+            int loadLevel = SceneManager.GetActiveScene().buildIndex + 1;
+            Debug.Log("loadLevel *** "+loadLevel);
+            XkGameCtrl.IsLoadingLevel = true;
+            if (NetCtrl.GetInstance() != null) {
+                NetCtrl.GetInstance().ResetGameInfo();
+            }
+            LoadingGameCtrl.ResetLoadingInfo();
+
+            if (!XkGameCtrl.IsGameOnQuit) {
+                System.GC.Collect();
+                SceneManager.LoadScene(loadLevel);
+            }
+        }
+        else {
+            //loading movie scene.
+            XkGameCtrl.LoadingGameMovie();
+        }
 	}
 }

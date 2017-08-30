@@ -1,3 +1,7 @@
+#define HAVE_DISPLAY_TV
+//HAVE_DISPLAY_TV -> 有显示器.
+#define NO_DISPLAY_P1
+//NO_DISPLAY_P1 -> 不显示P1的UI信息.
 using UnityEngine;
 using System.Collections;
 using System;
@@ -7,6 +11,10 @@ using System.Text;
 public class GameMovieCtrl : MonoBehaviour {
 	public MovieTexture Movie;
 	public GameObject MovieBJObj;
+    /// <summary>
+    /// 视频UITexture.
+    /// </summary>
+    public UITexture MovieUITexture;
 	public Rect[] RectArray;
 	public Rect RectMv;
 	public Texture[] TextureMv;
@@ -29,6 +37,7 @@ public class GameMovieCtrl : MonoBehaviour {
 	public static bool IsThreeScreenGame = false;
 	public static bool IsActivePlayer;
 	public static bool IsOpenVR = true;
+    public static bool IsNoDisplayP1 = false;
 	float TimeVal;
 	public static bool IsTestXiaoScreen = false;
 	enum QualityLevelEnum
@@ -48,6 +57,9 @@ public class GameMovieCtrl : MonoBehaviour {
 
 	void Awake()
 	{
+#if NO_DISPLAY_P1
+        IsNoDisplayP1 = true;
+#endif
 		if (!pcvr.bIsHardWare) {
 			string strInfo = HandleJson.GetInstance().ReadFromFileXml("TestOpenVR.info", "IsOpenVR");
 			if (strInfo == null || strInfo == "") {
@@ -63,7 +75,6 @@ public class GameMovieCtrl : MonoBehaviour {
 			}
 		}
 		
-		
 		if (CountMovie == 0) {
 			if (!IsOpenVR) {
 				GlassesCamObj.SetActive(false);
@@ -73,7 +84,9 @@ public class GameMovieCtrl : MonoBehaviour {
 			}
 		}
 		else {
-			GlassesCamObj.SetActive(false);
+			if (!IsOpenVR) {
+			    GlassesCamObj.SetActive(false);
+            }
 		}
 
 		if (CountMovie == 0 && !IsTestXiaoScreen && IsOpenVR) {
@@ -140,7 +153,10 @@ public class GameMovieCtrl : MonoBehaviour {
 	public GameObject MovieUICtrlObj;
 	void DelayPlayMovie()
 	{
-		GlassesCamObj.SetActive(false);
+		if (!IsOpenVR)
+		{
+            GlassesCamObj.SetActive(false);
+		}
 		MovieUICtrlObj.SetActive(true);
 		PlayMovie();
 	}
@@ -154,7 +170,11 @@ public class GameMovieCtrl : MonoBehaviour {
 		RectMv.height = Screen.height * 0.93f;
 		
 		if (Camera.main != null) {
+#if !NO_DISPLAY_P1
 			Vector3 posTmp = Camera.main.WorldToScreenPoint(InsertCoinTr[0].position);
+#else
+			Vector3 posTmp = Camera.main.WorldToScreenPoint(InsertCoinTr[1].position);
+#endif
 			float testPX = posTmp.x - (RectArray[0].width / 2f);
 			float testPY = posTmp.y + (RectArray[0].height * 0.7f);
 			testPY = Screen.height - testPY;
@@ -166,7 +186,11 @@ public class GameMovieCtrl : MonoBehaviour {
 			RectArray[1].x = testPX;
 			RectArray[1].y = testPY;
 			
+#if !NO_DISPLAY_P1
 			posTmp = Camera.main.WorldToScreenPoint(StartBtTr[0].position);
+#else
+			posTmp = Camera.main.WorldToScreenPoint(StartBtTr[1].position);
+#endif
 			testPX = posTmp.x - (RectArray[2].width / 2f);
 			testPY = posTmp.y + (RectArray[2].height * 0.7f);
 			testPY = Screen.height - testPY;
@@ -205,6 +229,10 @@ public class GameMovieCtrl : MonoBehaviour {
 		Movie.loop = false;
 		Movie.Play();
 		TimeStartMV = Time.realtimeSinceStartup;
+        if (IsOpenVR)
+        {
+            MovieUITexture.mainTexture = null;
+        }
 		
 		if (AudioSourceObj != null) {
 			AudioSourceObj.clip = Movie.audioClip;
@@ -239,14 +267,21 @@ public class GameMovieCtrl : MonoBehaviour {
 		}
 
 		float swTmp = (float)Screen.width / 3f;
-		if (!IsThreeScreenGame) {
-			GUI.DrawTexture(new Rect(0f,0f, Screen.width, Screen.height), TextureMvLG);
-		}
-		else {
-			GUI.DrawTexture(new Rect(0f, 0f, swTmp, Screen.height), TextureMvLG);
-			GUI.DrawTexture(new Rect(swTmp, 0f, swTmp, Screen.height), TextureMvLG);
-			GUI.DrawTexture(new Rect(swTmp * 2f, 0f, swTmp, Screen.height), TextureMvLG);
-		}
+        if (IsOpenVR)
+        {
+            MovieUITexture.mainTexture = TextureMvLG;
+        }
+        else
+        {
+		    if (!IsThreeScreenGame) {
+			    GUI.DrawTexture(new Rect(0f,0f, Screen.width, Screen.height), TextureMvLG);
+		    }
+		    else {
+			    GUI.DrawTexture(new Rect(0f, 0f, swTmp, Screen.height), TextureMvLG);
+			    GUI.DrawTexture(new Rect(swTmp, 0f, swTmp, Screen.height), TextureMvLG);
+			    GUI.DrawTexture(new Rect(swTmp * 2f, 0f, swTmp, Screen.height), TextureMvLG);
+		    }
+        }
 	}
 
 	float TimeMovieVal;
@@ -276,14 +311,22 @@ public class GameMovieCtrl : MonoBehaviour {
 			indexMVLG = 0;
 			break;
 		}
-		if (!IsThreeScreenGame) {
-			GUI.DrawTexture(new Rect(0f,0f, Screen.width, Screen.height), TextureMvEnd[indexMVLG]);
-		}
-		else {
-			GUI.DrawTexture(new Rect(0f, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
-			GUI.DrawTexture(new Rect(swTmp, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
-			GUI.DrawTexture(new Rect(swTmp * 2f, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
-		}
+        
+        if (IsOpenVR)
+        {
+            MovieUITexture.mainTexture = TextureMvEnd[indexMVLG];
+        }
+        else
+        {
+		    if (!IsThreeScreenGame) {
+			    GUI.DrawTexture(new Rect(0f,0f, Screen.width, Screen.height), TextureMvEnd[indexMVLG]);
+		    }
+		    else {
+			    GUI.DrawTexture(new Rect(0f, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
+			    GUI.DrawTexture(new Rect(swTmp, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
+			    GUI.DrawTexture(new Rect(swTmp * 2f, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
+		    }
+        }
 	}
 
 	float TimeDelayHiddenMvLogo = -10f;
@@ -305,6 +348,10 @@ public class GameMovieCtrl : MonoBehaviour {
 				TimeDelayHiddenMvLogo = Time.realtimeSinceStartup;
 				Movie.Play();
 				AudioSourceObj.Play();
+                if (IsOpenVR)
+                {
+                    MovieUITexture.mainTexture = null;
+                }
 				return;
 			}
 			return;
@@ -319,50 +366,81 @@ public class GameMovieCtrl : MonoBehaviour {
 			return;
 		}
 		CheckClientPortMovieInfo();
-		GUI.DrawTexture(RectMv, Movie, ScaleMode.StretchToFill);
+
+        if (!IsOpenVR)
+        {
+            GUI.DrawTexture(RectMv, Movie, ScaleMode.StretchToFill);
+        }
 
 		TimeVal += Time.deltaTime;
 		int timeTmp = (int)TimeVal;
 		if (!XKGlobalData.IsFreeMode) {
 			if (timeTmp % 2 == 0) {
+#if !NO_DISPLAY_P1
 				if (XKGlobalData.CoinPlayerOne < XKGlobalData.GameNeedCoin) {
 					GUI.DrawTexture(RectArray[0], TextureMv[0]);
 				}
 				else {
 					GUI.DrawTexture(RectArray[2], TextureMv[1]);
 				}
+#endif
 				
 				if (XKGlobalData.CoinPlayerTwo < XKGlobalData.GameNeedCoin) {
-					GUI.DrawTexture(RectArray[1], TextureMv[0]);
+                    if (!IsOpenVR)
+                    {
+					    GUI.DrawTexture(RectArray[1], TextureMv[0]);
+                    }
 				}
 				else {
-					GUI.DrawTexture(RectArray[3], TextureMv[1]);
+                    if (!IsOpenVR)
+                    {
+					    GUI.DrawTexture(RectArray[3], TextureMv[1]);
+                    }
 				}
 			}
 			else {
+#if !NO_DISPLAY_P1
 				if (XKGlobalData.CoinPlayerOne >= XKGlobalData.GameNeedCoin) {
 					GUI.DrawTexture(RectArray[2], TextureMv[2]);
 				}
+#endif
 				
 				if (XKGlobalData.CoinPlayerTwo >= XKGlobalData.GameNeedCoin) {
-					GUI.DrawTexture(RectArray[3], TextureMv[2]);
+                    if (!IsOpenVR)
+                    {
+					    GUI.DrawTexture(RectArray[3], TextureMv[2]);
+                    }
 				}
 			}
 		}
 		else {
 			if (timeTmp % 2 == 0) {
+#if !NO_DISPLAY_P1
 				GUI.DrawTexture(RectArray[2], TextureMv[1]);
-				GUI.DrawTexture(RectArray[3], TextureMv[1]);
+#endif
+                if (!IsOpenVR)
+                {
+				    GUI.DrawTexture(RectArray[3], TextureMv[1]);
+                }
 			}
 			else {
+#if !NO_DISPLAY_P1
 				GUI.DrawTexture(RectArray[2], TextureMv[2]);
-				GUI.DrawTexture(RectArray[3], TextureMv[2]);
+#endif
+                if (!IsOpenVR)
+                {
+                    GUI.DrawTexture(RectArray[3], TextureMv[2]);
+                }
 			}
 		}
 		
 		XkGameCtrl.TestNetInfo();
 		if (Camera.main != null && IsThreeScreenGame) {
+#if !NO_DISPLAY_P1
 			Vector3 posTmp = Camera.main.WorldToScreenPoint(InsertCoinTr[0].position);
+#else
+			Vector3 posTmp = Camera.main.WorldToScreenPoint(InsertCoinTr[1].position);
+#endif
 			float testPX = posTmp.x - (RectArray[0].width / 2f);
 			float testPY = posTmp.y + (RectArray[0].height * 0.7f);
 			testPY = Screen.height - testPY;
@@ -373,8 +451,13 @@ public class GameMovieCtrl : MonoBehaviour {
 			testPX = posTmp.x - (RectArray[1].width / 2f);
 			RectArray[1].x = testPX;
 			RectArray[1].y = testPY;
-
+            
+			
+#if !NO_DISPLAY_P1
 			posTmp = Camera.main.WorldToScreenPoint(StartBtTr[0].position);
+#else
+			posTmp = Camera.main.WorldToScreenPoint(StartBtTr[1].position);
+#endif
 			testPX = posTmp.x - (RectArray[2].width / 2f);
 			testPY = posTmp.y + (RectArray[2].height * 0.7f);
 			testPY = Screen.height - testPY;
@@ -518,7 +601,15 @@ public class GameMovieCtrl : MonoBehaviour {
 
 	void SetGameWindowToTop()
 	{
-		IntPtr hwnd = FindWindow(null, "HelicopterVR");
+        string appName = "HelicopterVR";
+		AppGameType gameType = GameTypeCtrl.AppTypeStatic;
+		switch (gameType) {
+		case AppGameType.LianJiTanKe:
+		case AppGameType.DanJiTanKe:
+        appName = "TankVR";
+			break;
+		}
+		IntPtr hwnd = FindWindow(null, appName);
 		SetForegroundWindow(hwnd);
 	}
 }

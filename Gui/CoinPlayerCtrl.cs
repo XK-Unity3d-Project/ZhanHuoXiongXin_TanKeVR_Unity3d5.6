@@ -30,12 +30,22 @@ public class CoinPlayerCtrl : MonoBehaviour {
 		switch (PlayerSt) {
 		case PlayerEnum.PlayerOne:
 			_InstanceOne = this;
+            if (GameMovieCtrl.IsNoDisplayP1)
+            {
+                transform.localPosition = new Vector3(0f, -18000f, 0f);
+            }
 			XKGlobalData.SetCoinPlayerOne(XKGlobalData.CoinPlayerOne);
 			InputEventCtrl.GetInstance().ClickStartBtOneEvent += ClickStartBtOneEvent;
 			break;
 			
 		case PlayerEnum.PlayerTwo:
-			_InstanceTwo = this;
+            _InstanceTwo = this;
+            if (GameMovieCtrl.IsNoDisplayP1)
+            {
+                Vector3 posLoc = transform.localPosition;
+                posLoc.x = 0f;
+                transform.localPosition = posLoc;
+            }
 			XKGlobalData.SetCoinPlayerTwo(XKGlobalData.CoinPlayerTwo);
 			InputEventCtrl.GetInstance().ClickStartBtTwoEvent += ClickStartBtTwoEvent;
 			break;

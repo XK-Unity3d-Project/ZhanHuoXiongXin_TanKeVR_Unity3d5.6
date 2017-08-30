@@ -91,7 +91,7 @@ public class BuJiBaoCtrl : MonoBehaviour {
 				XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 			
-			if (Network.peerType != NetworkPeerType.Server) {
+			if (Network.peerType != NetworkPeerType.Server || XkGameCtrl.GetInstance().IsOpenVR) {
 				//Add BuJiBao
 				switch (BuJiBao) {
 				case BuJiBaoType.DaoDan:
