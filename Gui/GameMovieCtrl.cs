@@ -57,6 +57,12 @@ public class GameMovieCtrl : MonoBehaviour {
 
 	void Awake()
 	{
+#if HAVE_DISPLAY_TV
+        IsHaveDisplayTV = true;
+#else
+        IsHaveDisplayTV = false;
+#endif
+
 #if NO_DISPLAY_P1
         IsNoDisplayP1 = true;
 #endif
@@ -87,11 +93,24 @@ public class GameMovieCtrl : MonoBehaviour {
 			if (!IsOpenVR) {
 			    GlassesCamObj.SetActive(false);
             }
+            else
+            {
+#if HAVE_DISPLAY_TV
+                GlassesCamObj.SetActive(false);
+#else
+#endif
+            }
 		}
 
 		if (CountMovie == 0 && !IsTestXiaoScreen && IsOpenVR) {
 			ChangeWindowPos();
 		}
+#if HAVE_DISPLAY_TV
+        MovieUITexture.gameObject.SetActive(false);
+        MovieUICtrlObj.transform.localPosition = Vector3.zero;
+#else
+        MovieUICtrlObj.transform.localPosition = new Vector3(0f, 0f, 3f);
+#endif
 	}
 
 	// Use this for initialization
@@ -147,7 +166,10 @@ public class GameMovieCtrl : MonoBehaviour {
 			PlayMovie();
 		}
 	}
-
+    /// <summary>
+    /// 是否有显示器.
+    /// </summary>
+    public static bool IsHaveDisplayTV = true;
 	static int CountMovie;
 	public GameObject GlassesCamObj;
 	public GameObject MovieUICtrlObj;
@@ -157,6 +179,13 @@ public class GameMovieCtrl : MonoBehaviour {
 		{
             GlassesCamObj.SetActive(false);
 		}
+        else
+        {
+#if HAVE_DISPLAY_TV
+		    GlassesCamObj.SetActive(false);
+#else
+#endif
+        }
 		MovieUICtrlObj.SetActive(true);
 		PlayMovie();
 	}
@@ -269,7 +298,18 @@ public class GameMovieCtrl : MonoBehaviour {
 		float swTmp = (float)Screen.width / 3f;
         if (IsOpenVR)
         {
+#if HAVE_DISPLAY_TV
+		    if (!IsThreeScreenGame) {
+			    GUI.DrawTexture(new Rect(0f,0f, Screen.width, Screen.height), TextureMvLG);
+		    }
+		    else {
+			    GUI.DrawTexture(new Rect(0f, 0f, swTmp, Screen.height), TextureMvLG);
+			    GUI.DrawTexture(new Rect(swTmp, 0f, swTmp, Screen.height), TextureMvLG);
+			    GUI.DrawTexture(new Rect(swTmp * 2f, 0f, swTmp, Screen.height), TextureMvLG);
+		    }
+#else
             MovieUITexture.mainTexture = TextureMvLG;
+#endif
         }
         else
         {
@@ -314,7 +354,18 @@ public class GameMovieCtrl : MonoBehaviour {
         
         if (IsOpenVR)
         {
+#if HAVE_DISPLAY_TV
+		    if (!IsThreeScreenGame) {
+			    GUI.DrawTexture(new Rect(0f,0f, Screen.width, Screen.height), TextureMvEnd[indexMVLG]);
+		    }
+		    else {
+			    GUI.DrawTexture(new Rect(0f, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
+			    GUI.DrawTexture(new Rect(swTmp, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
+			    GUI.DrawTexture(new Rect(swTmp * 2f, 0f, swTmp, Screen.height), TextureMvEnd[indexMVLG]);
+		    }
+#else
             MovieUITexture.mainTexture = TextureMvEnd[indexMVLG];
+#endif
         }
         else
         {
@@ -371,6 +422,13 @@ public class GameMovieCtrl : MonoBehaviour {
         {
             GUI.DrawTexture(RectMv, Movie, ScaleMode.StretchToFill);
         }
+        else
+        {
+#if HAVE_DISPLAY_TV
+            GUI.DrawTexture(RectMv, Movie, ScaleMode.StretchToFill);
+#else
+#endif
+        }
 
 		TimeVal += Time.deltaTime;
 		int timeTmp = (int)TimeVal;
@@ -390,11 +448,23 @@ public class GameMovieCtrl : MonoBehaviour {
                     {
 					    GUI.DrawTexture(RectArray[1], TextureMv[0]);
                     }
+                    else
+                    {
+#if HAVE_DISPLAY_TV
+                        GUI.DrawTexture(RectArray[1], TextureMv[0]);
+#endif
+                    }
 				}
 				else {
                     if (!IsOpenVR)
                     {
 					    GUI.DrawTexture(RectArray[3], TextureMv[1]);
+                    }
+                    else
+                    {
+#if HAVE_DISPLAY_TV
+                        GUI.DrawTexture(RectArray[3], TextureMv[1]);
+#endif
                     }
 				}
 			}
@@ -410,6 +480,12 @@ public class GameMovieCtrl : MonoBehaviour {
                     {
 					    GUI.DrawTexture(RectArray[3], TextureMv[2]);
                     }
+                    else
+                    {
+#if HAVE_DISPLAY_TV
+                        GUI.DrawTexture(RectArray[3], TextureMv[2]);
+#endif
+                    }
 				}
 			}
 		}
@@ -422,6 +498,12 @@ public class GameMovieCtrl : MonoBehaviour {
                 {
 				    GUI.DrawTexture(RectArray[3], TextureMv[1]);
                 }
+                else
+                {
+#if HAVE_DISPLAY_TV
+                    GUI.DrawTexture(RectArray[3], TextureMv[1]);
+#endif
+                }
 			}
 			else {
 #if !NO_DISPLAY_P1
@@ -430,6 +512,12 @@ public class GameMovieCtrl : MonoBehaviour {
                 if (!IsOpenVR)
                 {
                     GUI.DrawTexture(RectArray[3], TextureMv[2]);
+                }
+                else
+                {
+#if HAVE_DISPLAY_TV
+                    GUI.DrawTexture(RectArray[3], TextureMv[2]);
+#endif
                 }
 			}
 		}

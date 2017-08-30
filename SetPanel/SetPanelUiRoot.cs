@@ -191,9 +191,16 @@ public class SetPanelUiRoot : MonoBehaviour {
 
         if (IsOpenVR)
         {
-            Transform trRoot = transform.root;
-            trRoot.parent = VRCameraTr;
-            trRoot.localPosition = new Vector3(0f, 0f, 3f);
+            if (GameMovieCtrl.IsHaveDisplayTV)
+            {
+                VRCameraTr.gameObject.SetActive(false);
+            } 
+            else
+            {
+                Transform trRoot = transform.root;
+                trRoot.parent = VRCameraTr;
+                trRoot.localPosition = new Vector3(0f, 0f, 3f);
+            }
         }
         else
         {
