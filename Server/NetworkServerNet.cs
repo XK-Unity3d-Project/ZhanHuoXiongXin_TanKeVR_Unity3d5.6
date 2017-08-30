@@ -73,6 +73,10 @@ public class NetworkServerNet : MonoBehaviour {
 
 	void OnGUI()
 	{
+        if (pcvr.bIsHardWare)
+        {
+            return;
+        }
 		string strA = "IsActiveClient "+IsActiveClient+", bIsLinkServer "+bIsLinkServer;
 		GUI.Box(new Rect(10f, Screen.height - 25f, Screen.width, 25f), strA);
 		if (!XkGameCtrl.IsShowDebugInfoBox) {

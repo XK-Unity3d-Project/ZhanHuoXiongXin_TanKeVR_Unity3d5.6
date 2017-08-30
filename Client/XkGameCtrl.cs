@@ -1868,6 +1868,11 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public static void TestNetInfo()
 	{
+        if (pcvr.bIsHardWare)
+        {
+            return;
+        }
+
 		bool isTestInfo = false;
 		if (isTestInfo) {
 			return;

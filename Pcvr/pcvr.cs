@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class pcvr : MonoBehaviour {
-	public static bool bIsHardWare = false;
+	public static bool bIsHardWare = true;
 	public static Vector3 CrossPositionOne;
 	public static Vector3 CrossPositionTwo;
 	public static bool IsJiaoYanHid;

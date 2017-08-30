@@ -1,4 +1,4 @@
-#define HAVE_DISPLAY_TV
+//#define HAVE_DISPLAY_TV
 //HAVE_DISPLAY_TV -> 有显示器.
 #define NO_DISPLAY_P1
 //NO_DISPLAY_P1 -> 不显示P1的UI信息.
