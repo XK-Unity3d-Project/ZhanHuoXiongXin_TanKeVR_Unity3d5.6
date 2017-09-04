@@ -282,7 +282,7 @@ public class GameMovieCtrl : MonoBehaviour {
 			return;
 		}
 		IsStopMovie = true;
-        LoadingVrObj.SetActive(true);
+        //LoadingVrObj.SetActive(true);
 		Movie.Stop();
 		if (AudioSourceObj != null) {
 			AudioSourceObj.Stop();
