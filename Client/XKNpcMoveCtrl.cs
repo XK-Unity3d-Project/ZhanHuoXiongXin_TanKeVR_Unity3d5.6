@@ -407,7 +407,8 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 	}
 	
 	public void SetIndexNpc(int val)
-	{
+    {
+        IsMoveFirePoint = false;
 		IndexNpc = val;
 		SetFirePointScript();
 	}
@@ -435,18 +436,20 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 		FirePointCtrl pointCtrl = SpawnPointScript.FirePointGroup[IndexFirePointGroup];
 		Transform pointCtrlTran = pointCtrl.transform;
 //		Debug.Log("IndexNpc "+IndexNpc+", childCount "+pointCtrlTran.childCount);
-		if (IndexNpc < pointCtrlTran.childCount) {
-			FirePointScript = pointCtrlTran.GetChild(IndexNpc).GetComponent<FirePoint>();
-		}
-		else {
-			int rv = Random.Range(0, pointCtrlTran.childCount);
-			FirePointScript = pointCtrlTran.GetChild(rv).GetComponent<FirePoint>();
-		}
+//		if (IndexNpc < pointCtrlTran.childCount) {
+//			FirePointScript = pointCtrlTran.GetChild(IndexNpc).GetComponent<FirePoint>();
+//		}
+//		else {
+//			int rv = Random.Range(0, pointCtrlTran.childCount);
+//			FirePointScript = pointCtrlTran.GetChild(rv).GetComponent<FirePoint>();
+//        }
+        int rv = Random.Range(0, pointCtrlTran.childCount);
+        FirePointScript = pointCtrlTran.GetChild(rv).GetComponent<FirePoint>();
 	}
 
 	public void MakeNpcMoveFirePoint()
 	{
-		if (IsDeathNPC) {
+        if (IsDeathNPC) {
 			return;
 		}
 
@@ -1820,7 +1823,8 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 	{
 		IsInitNpcInfo = false;
 		IsHandleRpc = false;
-		IsMoveToMarkPoint = false;
+        IsMoveToMarkPoint = false;
+        IsMoveFirePoint = false;
 		
 		IsMoveFirePoint = false;
 //		IsIntoJingJieState = false;
