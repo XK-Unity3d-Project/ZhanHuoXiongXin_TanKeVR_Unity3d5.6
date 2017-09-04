@@ -354,7 +354,7 @@ public class XkGameCtrl : MonoBehaviour {
 			GameJiTaiSt = GameJiTaiType.TanKeJiTai; //test
 			//obj = (GameObject)Instantiate(TanKePlayer, posPlayerTK, TanKePlayerTran.rotation);
 			obj = (GameObject)Instantiate(TanKePlayer,
-											TanKePlayerMark.transform.position,
+											TanKePlayerMark.transform.position + new Vector3(0f, 0.8f, 0f),
 											TanKePlayerMark.transform.rotation);
 			playerScript = obj.GetComponent<XkPlayerCtrl>();
 			playerScript.SetAiPathScript(TanKePlayerPath);
@@ -950,6 +950,10 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void AddDaoDanNum(PlayerEnum playerSt)
 	{
+		if (IsOpenVR) {
+			return;
+		}
+
 		switch(playerSt) {
 		case PlayerEnum.PlayerOne:
 			DaoDanNumPOne += DaoDanBuJiNum;
@@ -1062,11 +1066,17 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void SubDaoDanNumPOne()
 	{
+		if (IsOpenVR) {
+			return;
+		}
 		DaoDanNumPOne--;
 	}
 	
 	public void SubDaoDanNumPTwo()
 	{
+		if (IsOpenVR) {
+			return;
+		}
 		DaoDanNumPTwo--;
 	}
 
