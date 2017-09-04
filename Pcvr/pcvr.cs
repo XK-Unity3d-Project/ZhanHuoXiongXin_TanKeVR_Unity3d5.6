@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class pcvr : MonoBehaviour {
-	public static bool bIsHardWare = true;
+	public static bool bIsHardWare = false;
 	public static Vector3 CrossPositionOne;
 	public static Vector3 CrossPositionTwo;
 	public static bool IsJiaoYanHid;
@@ -162,6 +162,13 @@ public class pcvr : MonoBehaviour {
         //if (GameTypeCtrl.AppTypeStatic == AppGameType.LianJiServer) {
         //    return;
         //}
+        if (pcvr.bIsHardWare)
+        {
+            if (Time.frameCount % 35 == 0)
+            {
+                Cursor.visible = false;
+            }
+        }
 
 		CheckCrossPositionPOne();
 		CheckCrossPositionPTwo();

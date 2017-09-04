@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public enum GameTextType
 {
@@ -19,7 +20,8 @@ public class XKGlobalData {
 	public static int GameAudioVolume;
 	public static bool IsFreeMode;
 	public static string GameDiff = "1";
-	static public string FileName = "XKGameConfig.xml";
+	static string FilePath = "";
+	static public string FileName = "../config/XKGameConfig.xml";
 	static public HandleJson HandleJsonObj = null;
 	float TimeValDaoDanJingGao;
 	static XKGlobalData Instance;
@@ -27,6 +29,10 @@ public class XKGlobalData {
 	{
 		if (Instance == null) {
 			Instance = new XKGlobalData();
+			Instance.InitInfo();
+			if (!Directory.Exists(FilePath)) {
+				Directory.CreateDirectory(FilePath);
+			}
 			if(HandleJsonObj == null) {
 				HandleJsonObj = HandleJson.GetInstance();
 			}
@@ -80,6 +86,11 @@ public class XKGlobalData {
 			GameAudioVolume = Convert.ToInt32(val);
 		}
 		return Instance;
+	}
+	
+	void InitInfo()
+	{
+		FilePath = Application.dataPath + "/../config";
 	}
 	
 	public static void GetGameDiffVal()

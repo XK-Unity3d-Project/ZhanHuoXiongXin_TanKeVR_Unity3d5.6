@@ -9,6 +9,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 
 public class GameMovieCtrl : MonoBehaviour {
+    /// <summary>
+    /// VR摄像机的loading.
+    /// </summary>
+    public GameObject LoadingVrObj;
 	public MovieTexture Movie;
 	public GameObject MovieBJObj;
     /// <summary>
@@ -56,7 +60,8 @@ public class GameMovieCtrl : MonoBehaviour {
 	}
 
 	void Awake()
-	{
+    {
+        LoadingVrObj.SetActive(false);
 #if HAVE_DISPLAY_TV
         IsHaveDisplayTV = true;
 #else
@@ -109,13 +114,14 @@ public class GameMovieCtrl : MonoBehaviour {
         MovieUITexture.gameObject.SetActive(false);
         MovieUICtrlObj.transform.localPosition = Vector3.zero;
 #else
-        MovieUICtrlObj.transform.localPosition = new Vector3(0f, 0f, 3f);
+        //MovieUICtrlObj.transform.localPosition = new Vector3(0f, 0f, 3f);
 #endif
 	}
 
 	// Use this for initialization
 	void Start()
 	{
+        Cursor.visible = !pcvr.bIsHardWare;
 		MovieRender = GetComponent<Renderer>();
 		if (XKGlobalData.GetInstance() != null) {
 			AudioListener.volume = (float)XKGlobalData.GameAudioVolume / 10f;
@@ -276,6 +282,7 @@ public class GameMovieCtrl : MonoBehaviour {
 			return;
 		}
 		IsStopMovie = true;
+        LoadingVrObj.SetActive(true);
 		Movie.Stop();
 		if (AudioSourceObj != null) {
 			AudioSourceObj.Stop();
@@ -331,7 +338,7 @@ public class GameMovieCtrl : MonoBehaviour {
 	bool IsRestartGame;
 	float TimeStartMV;
 	int CountMV;
-	bool IsPlayMvLogo;
+	public bool IsPlayMvLogo;
 	float TimeLogo;
 	void ShowGameMovieLogo()
 	{
@@ -398,11 +405,7 @@ public class GameMovieCtrl : MonoBehaviour {
 				TimeStartMV = Time.realtimeSinceStartup;
 				TimeDelayHiddenMvLogo = Time.realtimeSinceStartup;
 				Movie.Play();
-				AudioSourceObj.Play();
-                if (IsOpenVR)
-                {
-                    MovieUITexture.mainTexture = null;
-                }
+                AudioSourceObj.Play();
 				return;
 			}
 			return;
@@ -566,7 +569,7 @@ public class GameMovieCtrl : MonoBehaviour {
 			AudioSourceObj.Stop();
 
 			TimeStartMV = Time.realtimeSinceStartup;
-			CountMV++;
+            CountMV++;
 		}
 		
 		ShowGameMvLG();
@@ -575,6 +578,10 @@ public class GameMovieCtrl : MonoBehaviour {
 			GUI.Label(new Rect(10f, 0f, Screen.width * 0.5f, 30f), mvInfo);
 		}
 		XKGameFPSCtrl.DrawGameFPS();
+
+        if (IsOpenVR && MovieUITexture.mainTexture != null) {
+            MovieUITexture.mainTexture = null;
+        }
 	}
 	public Transform[] InsertCoinTr;
 	public Transform[] StartBtTr;
