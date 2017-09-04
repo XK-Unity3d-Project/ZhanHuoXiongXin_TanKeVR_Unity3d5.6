@@ -109,13 +109,14 @@ public class GameMovieCtrl : MonoBehaviour {
         MovieUITexture.gameObject.SetActive(false);
         MovieUICtrlObj.transform.localPosition = Vector3.zero;
 #else
-        MovieUICtrlObj.transform.localPosition = new Vector3(0f, 0f, 3f);
+        //MovieUICtrlObj.transform.localPosition = new Vector3(0f, 0f, 3f);
 #endif
 	}
 
 	// Use this for initialization
 	void Start()
 	{
+        Cursor.visible = !pcvr.bIsHardWare;
 		MovieRender = GetComponent<Renderer>();
 		if (XKGlobalData.GetInstance() != null) {
 			AudioListener.volume = (float)XKGlobalData.GameAudioVolume / 10f;
