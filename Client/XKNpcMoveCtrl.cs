@@ -52,7 +52,7 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 	Vector3 MarkTranAimForward;
 	NpcPathCtrl NpcPathScript;
 	int IndexNpc;
-	int IndexFirePointGroup;
+    int IndexFirePointGroup;
 //	bool IsIntoJingJieState;
 	FirePoint FirePointScript;
 	bool IsMoveFirePoint;
@@ -420,15 +420,16 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 			return;
 		}
 
-		if (SpawnPointScript.FirePointGroup.Length <= IndexFirePointGroup) {
-			if (!SpawnPointScript.IsLoopFirePoint || SpawnPointScript.FirePointGroup.Length == 1) {
-				FirePointScript = null;
-				return;
-			}
-			else {
-				IndexFirePointGroup = 0;
-			}
-		}
+//		if (SpawnPointScript.FirePointGroup.Length <= IndexFirePointGroup) {
+//			if (!SpawnPointScript.IsLoopFirePoint || SpawnPointScript.FirePointGroup.Length == 1) {
+//				FirePointScript = null;
+//				return;
+//			}
+//			else {
+//				IndexFirePointGroup = 0;
+//			}
+//        }
+        IndexFirePointGroup = Random.Range(0, SpawnPointScript.FirePointGroup.Length);
 //		Debug.Log("SetFirePointScript...");
 
 		FirePointCtrl pointCtrl = SpawnPointScript.FirePointGroup[IndexFirePointGroup];

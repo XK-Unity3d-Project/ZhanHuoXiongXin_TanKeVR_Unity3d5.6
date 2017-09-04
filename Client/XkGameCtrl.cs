@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,35 +35,35 @@ public class XkGameCtrl : MonoBehaviour {
 	 */
 	public GameObject[] CameraVRObj;
 	/**
-	 * YouLiangDianMin -> 椋炴満涓昏?鍗曚汉娌归噺鐐疙
+	 * YouLiangDianMin -> 飞机主�?单人油量炸�
 	 */
 	[Range(1, 1000)] public int YouLiangDianMin = 50;
 	/**
-	 * YouLiangDianMinSR -> 椋炴満涓昏?鍙屼汉娌归噺鐐疙
+	 * YouLiangDianMinSR -> 飞机主�?双人油量炸�
 	 */
 	[Range(1, 1000)] public int YouLiangDianMinSR = 50;
 	/**
-	 * YouLiangDianMinLJ -> 椋炴満涓昏?鑱旀満鍗曚汉娌归噺鐐疙
+	 * YouLiangDianMinLJ -> 飞机主�?联机单人油量炸�
 	 */
 	[Range(1, 1000)] public int YouLiangDianMinLJ = 50;
 	/**
-	 * YouLiangDianMinLJSR -> 椋炴満涓昏?鑱旀満鍙屼汉娌归噺鐐疙
+	 * YouLiangDianMinLJSR -> 飞机主�?联机双人油量炸�
 	 */
 	[Range(1, 1000)] public int YouLiangDianMinLJSR = 50;
 	/**
-	 * YouLiangDianMin -> 鍧﹀厠涓昏?鍗曚汉娌归噺鐐疙
+	 * YouLiangDianMin -> 坦克主�?单人油量炸�
 	 */
 	[Range(1, 1000)] public int TKYouLiangDianMin = 50;
 	/**
-	 * YouLiangDianMinSR -> 鍧﹀厠涓昏?鍙屼汉娌归噺鐐疙
+	 * YouLiangDianMinSR -> 坦克主�?双人油量炸�
 	 */
 	[Range(1, 1000)] public int SRTKYouLiangDianMin = 50;
 	/**
-	 * YouLiangDianMinLJ -> 鍧﹀厠涓昏?鑱旀満鍗曚汉娌归噺鐐疙
+	 * YouLiangDianMinLJ -> 坦克主�?联机单人油量炸�
 	 */
 	[Range(1, 1000)] public int LJTKYouLiangDianMin = 50;
 	/**
-	 * YouLiangDianMinLJSR -> 鍧﹀厠涓昏?鑱旀満鍙屼汉娌归噺鐐疙
+	 * YouLiangDianMinLJSR -> 坦克主�?联机双人油量炸�
 	 */
 	[Range(1, 1000)] public int LJSRTKYouLiangDianMin = 50;
 	int YouLiangDianVal;
@@ -80,9 +80,9 @@ public class XkGameCtrl : MonoBehaviour {
 	AiPathCtrl TanKePlayerPath;
 	public GameObject CartoonCamPlayer;
 	public AiMark CartoonCamPlayerMark;
-	public GameObject ServerCamera; //鏈嶅姟鍣ㄩ?鏈烘憚鍍忔満.
+	public GameObject ServerCamera; //服务器�?机摄像机.
 	public static GameObject ServerCameraObj;
-	public GameObject ServerCameraTK; //鏈嶅姟鍣ㄥ潶鍏嬫憚鍍忔満.
+	public GameObject ServerCameraTK; //服务器坦克摄像机.
 	public static GameObject ServerCameraObjTK;
 	Transform CartoonCamPlayerTran;
 	int CartoonCamMarkIndex = 1;
