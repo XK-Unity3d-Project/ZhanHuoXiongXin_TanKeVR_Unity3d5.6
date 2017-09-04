@@ -1,4 +1,4 @@
-ï»¿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -203,7 +203,7 @@ public class pcvr : MonoBehaviour {
 	byte EndRead_1 = 0x41;
 	byte EndRead_2 = 0x42;
 	/**
-****************.æ˜¾ç¤ºå™¨.****************
+****************.ÏÔÊ¾Æ÷.****************
 QiNangArray[0]			QiNangArray[1]
 QiNangArray[3]			QiNangArray[2]
 	 */
@@ -559,7 +559,7 @@ QiNangArray[3]			QiNangArray[2]
 					tmpVal ^= MyCOMDevice.ComThreadClass.ReadByteMsg[i];
 				}
 				
-				//æ ¡éªŒ2...
+				//Ð£Ñé2...
 				if ( tmpVal == MyCOMDevice.ComThreadClass.ReadByteMsg[14]
 				    && (JiaoYanDt[1]&0xef) == MyCOMDevice.ComThreadClass.ReadByteMsg[15]
 				    && (JiaoYanDt[2]&0xfe) == MyCOMDevice.ComThreadClass.ReadByteMsg[16]
@@ -594,7 +594,7 @@ QiNangArray[3]			QiNangArray[2]
 					//					ScreenLog.Log("ReadByte[0 - 22] "+testStrA);
 					//					ScreenLog.Log("ReadByte[14 - 17] "+testStrB);
 					//					ScreenLog.Log("SendByte[14 - 17] "+testStrD);
-					//					ScreenLog.LogError("æ ¡éªŒæ•°æ®é”™è¯¯!");
+					//					ScreenLog.LogError("Ð£ÑéÊý¾Ý´íÎó!");
 				}
 			}
 			//			else {
@@ -615,8 +615,8 @@ QiNangArray[3]			QiNangArray[2]
 	}
 	
 	/**
-	 * DongGanState == 1 -> æ‰“å¼€åŠ¨æ„Ÿ.
-	 * DongGanState == 0 -> å…³é—­åŠ¨æ„Ÿ.
+	 * DongGanState == 1 -> ´ò¿ª¶¯¸Ð.
+	 * DongGanState == 0 -> ¹Ø±Õ¶¯¸Ð.
 	 */
 	public static byte DongGanState = 1;
 	void keyProcess(uint []buffer)
@@ -1621,14 +1621,14 @@ QiNangArray[3]			QiNangArray[2]
 			}
 		}
 		else {
-			HardwareCheckCtrl.Instance.SetJiaMiJYMsg("æ ¡éªŒä¸­...", JiaMiJiaoYanEnum.Null);
+			HardwareCheckCtrl.Instance.SetJiaMiJYMsg("Ð£ÑéÖÐ...", JiaMiJiaoYanEnum.Null);
 		}
 		RandomJiaoYanDt();
 		JiaoYanCheckCount = 0;
 		IsJiaoYanHid = true;
 		CancelInvoke("CloseJiaoYanIO");
 		Invoke("CloseJiaoYanIO", 3f);
-		//ScreenLog.Log("å¼€å§‹æ ¡éªŒ...");
+		//ScreenLog.Log("¿ªÊ¼Ð£Ñé...");
 	}
 	
 	void CloseJiaoYanIO()
