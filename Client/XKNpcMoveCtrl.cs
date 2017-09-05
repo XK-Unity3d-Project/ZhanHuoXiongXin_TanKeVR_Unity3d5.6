@@ -1825,8 +1825,7 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 		IsHandleRpc = false;
         IsMoveToMarkPoint = false;
         IsMoveFirePoint = false;
-		
-		IsMoveFirePoint = false;
+
 //		IsIntoJingJieState = false;
 		IsDelayFireAction = false;
 		
