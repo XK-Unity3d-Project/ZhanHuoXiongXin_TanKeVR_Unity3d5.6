@@ -168,6 +168,7 @@ public class XKNpcFangZhenCtrl : MonoBehaviour {
 			itweenScript.isRunning = false;
 			itweenScript.isPaused = true;
 			itweenScript.enabled = false;
+            Destroy(itweenScript);
 		}
 
 		do {
