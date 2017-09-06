@@ -73,7 +73,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 	PlayerZhiShengJiCtrl PlayerZhiShengJiScript;
 	int MarkCount;
 	public bool IsTestDrawPath;
-	XKPlayerAutoFire PlayerAutoFireScript;
+    public XKPlayerAutoFire PlayerAutoFireScript;
 	NetworkView NetViewCom;
 	bool IsHandleRpc;
 	float TimeCheckAimNpcLast;

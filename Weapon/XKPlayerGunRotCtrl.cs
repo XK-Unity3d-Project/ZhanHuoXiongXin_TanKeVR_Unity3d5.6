@@ -73,11 +73,7 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 			return;
 		}
 
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-            //mousePosInput = pcvr.CrossPositionOne;
-            mousePosInput = pcvr.CrossPositionTwo;
-		}
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerEnum.PlayerTwo);
 		CurPX = mousePosInput.x;
 		CurPY = mousePosInput.y;
 		CurPX = CurPX < 0f ? 0f : CurPX;
@@ -90,7 +86,7 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 
 		PlayerGunPos = PlayerGunTr.position;
 		Vector3 mousePos = mousePosInput + Vector3.forward * OffsetForward;
-		Vector3 posTmp = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 posTmp = Camera.main.ScreenToWorldPoint(mousePos);
 		Vector3 gunForward = Vector3.Normalize(posTmp - PlayerGunPos);
 		if (gunForward != Vector3.zero) {
 			PlayerGunTr.forward = gunForward;

@@ -11,8 +11,9 @@ public enum PlayerAmmoType
 }
 
 public class XKPlayerAutoFire : MonoBehaviour {
-	
-	public LayerMask FireLayer;
+    public Vector2 PerMouseH = new Vector2(0.48f, 0.63f); //[0, 1]
+    Vector2 PerMouseW = new Vector2(0f, 1f); //[0, 1]
+    public LayerMask FireLayer;
 	public TweenRotation[] QianGuanTwRot;
 	public Transform[] AmmoStartPosOne;
 	public Transform[] AmmoStartPosTwo;
@@ -67,8 +68,13 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 	// Use this for initialization
 	void Start()
 	{
-		//AmmoParticleList = new List<AmmoParticleDt>(6);
-		for (int i = 0; i < QianGuanTwRot.Length; i++) {
+        //AmmoParticleList = new List<AmmoParticleDt>(6);
+        PerMouseH.x = Mathf.Clamp01(PerMouseH.x);
+        PerMouseH.y = Mathf.Clamp01(PerMouseH.y);
+        PerMouseW.x = Mathf.Clamp01(PerMouseW.x);
+        PerMouseW.y = Mathf.Clamp01(PerMouseW.y);
+
+        for (int i = 0; i < QianGuanTwRot.Length; i++) {
 			QianGuanTwRot[i].enabled = false;
 		}
 		FireLayer = XkGameCtrl.GetInstance().PlayerAmmoHitLayer;
@@ -274,11 +280,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		PlayerAmmoCtrl ammoScript = obj.GetComponent<PlayerAmmoCtrl>();
 		ammoScript.SetIsDonotHurtNpc(false);
 		
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-			mousePosInput = pcvr.CrossPositionOne;
-		}
-		
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerEnum.PlayerOne);
 		Vector3 firePos = Vector3.zero;
 		Vector3 mousePos = mousePosInput + Vector3.forward * OffsetForward;
 		Vector3 posTmp = Camera.main.ScreenToWorldPoint(mousePos);
@@ -430,11 +432,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		PlayerAmmoCtrl ammoScript = obj.GetComponent<PlayerAmmoCtrl>();
 		ammoScript.SetIsDonotHurtNpc(false);
 		
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-			mousePosInput = pcvr.CrossPositionTwo;
-		}
-		
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerEnum.PlayerTwo);
 		Vector3 firePos = Vector3.zero;
 		Vector3 mousePos = mousePosInput + Vector3.forward * OffsetForward;
 		Vector3 posTmp = Camera.main.ScreenToWorldPoint(mousePos);
@@ -826,11 +824,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		PlayerAmmoCtrl ammoScript = obj.GetComponent<PlayerAmmoCtrl>();
 		XkGameCtrl.GetInstance().SubDaoDanNumPOne();
 		
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-			mousePosInput = pcvr.CrossPositionOne;
-		}
-		
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerEnum.PlayerOne);
 		Vector3 firePos = Vector3.zero;
 		Vector3 mousePos = mousePosInput + Vector3.forward * OffsetForward;
 		Vector3 posTmp = Camera.main.ScreenToWorldPoint(mousePos);
@@ -940,11 +934,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		PlayerAmmoCtrl ammoScript = obj.GetComponent<PlayerAmmoCtrl>();
 		XkGameCtrl.GetInstance().SubDaoDanNumPTwo();
 		
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-			mousePosInput = pcvr.CrossPositionTwo;
-		}
-		
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerEnum.PlayerTwo);
 		Vector3 firePos = Vector3.zero;
 		Vector3 mousePos = mousePosInput + Vector3.forward * OffsetForward;
 		Vector3 posTmp = Camera.main.ScreenToWorldPoint(mousePos);
@@ -1142,11 +1132,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			return;
 		}
 
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-			mousePosInput = pcvr.CrossPositionOne;
-		}
-		
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerEnum.PlayerOne);
 		Ray ray = Camera.main.ScreenPointToRay(mousePosInput);
 		RaycastHit hit;
 		bool  isAimPlayer = false;
@@ -1202,11 +1188,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			return;
 		}
 		
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-			mousePosInput = pcvr.CrossPositionOne;
-		}
-
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerEnum.PlayerOne);
 		Ray ray = Camera.main.ScreenPointToRay(mousePosInput);
 		RaycastHit hit;
 		bool  isAimPlayer = false;
