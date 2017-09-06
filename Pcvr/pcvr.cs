@@ -156,6 +156,12 @@ public class pcvr : MonoBehaviour {
 		InitCrossPosInfoPTwo();
 	}
 	
+    void FixedUpdate()
+    {
+        CheckCrossPositionPOne();
+        CheckCrossPositionPTwo();
+    }
+
 	// Update is called once per frame
 	void Update()
 	{

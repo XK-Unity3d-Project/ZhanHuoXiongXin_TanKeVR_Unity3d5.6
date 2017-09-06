@@ -103,10 +103,10 @@ public class MyCOMDevice : MonoBehaviour {
 				//else {
 				//	Thread.Sleep(10);
                 //}
-                Thread.Sleep(10);
+                Thread.Sleep(8);
                 COMRxData();
                 IsTestWRPer = true;
-                Thread.Sleep(10);
+                Thread.Sleep(8);
 				//Thread.Sleep(25);
 			}
 			while (_SerialPort.IsOpen);
