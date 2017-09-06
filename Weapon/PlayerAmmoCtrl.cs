@@ -347,7 +347,6 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 			return;
 		}
 		
-		//		XKNpcMoveCtrl npcScript = null;
 		XKNpcHealthCtrl healthScript = null;
 		Transform[] npcArray = XkGameCtrl.GetInstance().GetNpcTranList().ToArray();
 		int max = npcArray.Length;
@@ -359,13 +358,13 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 			}
 			
 			posB = npcArray[i].position;
-			/*float disTest = Vector3.Distance(posA, posB);
-			Debug.Log("disTest "+disTest+", posA "+posA+", posB "+posB+", AmmoDamageDis "+AmmoDamageDis);*/
+			//Debug.Log("disTest "+disTest+", posA "+posA+", posB "+posB+", AmmoDamageDis "+AmmoDamageDis);
 			if (Vector3.Distance(posA, posB) <= AmmoDamageDis) {
 				healthScript = npcArray[i].GetComponentInChildren<XKNpcHealthCtrl>();
-				if (healthScript != null && !healthScript.IsYouTongNpc) {
-					//Add Damage Npc num to PlayerInfo.
-					healthScript.OnDamageNpc(AmmoType, PlayerState);
+				if (healthScript != null)
+                {
+                        //Add Damage Npc num to PlayerInfo.
+                        healthScript.OnDamageNpc(AmmoType, PlayerState);
 				}
 			}
 		}
