@@ -97,15 +97,16 @@ public class MyCOMDevice : MonoBehaviour {
 				}
 
 				COMTxData();
-				if (pcvr.IsJiaoYanHid || pcvr.IsSlowLoopCom) {
-					Thread.Sleep(100);
-				}
-				else {
-					Thread.Sleep(25);
-				}
-				COMRxData();
+				//if (pcvr.IsJiaoYanHid || pcvr.IsSlowLoopCom) {
+				//	Thread.Sleep(100);
+				//}
+				//else {
+				//	Thread.Sleep(10);
+                //}
+                Thread.Sleep(8);
+                COMRxData();
 				IsTestWRPer = true;
-				Thread.Sleep(25);
+				//Thread.Sleep(25);
 			}
 			while (_SerialPort.IsOpen);
 			CloseComPort();
