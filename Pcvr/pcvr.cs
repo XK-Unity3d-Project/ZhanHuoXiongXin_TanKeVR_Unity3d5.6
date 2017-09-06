@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class pcvr : MonoBehaviour {
-	public static bool bIsHardWare = true;
+    public static bool bIsHardWare = false;
 	public static Vector3 CrossPositionOne;
 	public static Vector3 CrossPositionTwo;
 	public static bool IsJiaoYanHid;
@@ -1587,8 +1587,8 @@ QiNangArray[3]			QiNangArray[2]
 			mousePosCur.y = mousePosCur.y > CrossPosYMinP2 ? CrossPosYMinP2 : mousePosCur.y;
 			mousePosCur.y = mousePosCur.y > CrossPosYMaxP2 ? mousePosCur.y : CrossPosYMaxP2;
 		}
-		
-		pos.x = (int)(Mathf.Abs(mousePosCur.x - CrossPosXMinP2 + 1) * XkGameCtrl.ScreenWidth) / CrossPosDisXP2;
+
+        pos.x = (int)(Mathf.Abs(mousePosCur.x - CrossPosXMinP2 + 1) * XkGameCtrl.ScreenWidth) / CrossPosDisXP2;
 		pos.y = (int)(Mathf.Abs(mousePosCur.y - CrossPosYMinP2 + 1) * XkGameCtrl.ScreenHeight) / CrossPosDisYP2;
 		
 		CrossPositionTwo = pos;
@@ -1766,6 +1766,36 @@ QiNangArray[3]			QiNangArray[2]
 		IsPlayerActivePcvr = true;
 		TimeLastActivePcvr = Time.realtimeSinceStartup;
 	}
+
+    public static Vector3 GetPlayerMousePos(PlayerEnum playerIndex)
+    {
+        Vector3 crossPos = Input.mousePosition;
+        if (bIsHardWare)
+        {
+            switch (playerIndex)
+            {
+                case PlayerEnum.PlayerOne:
+                    {
+                        crossPos = MousePositionP1;
+                        break;
+                    }
+                case PlayerEnum.PlayerTwo:
+                    {
+                        crossPos = MousePositionP2;
+                        break;
+                    }
+            }
+        }
+
+        if (XkPlayerCtrl.GetInstanceTanKe() != null)
+        {
+            //Vector2 perMouseW = XkPlayerCtrl.GetInstanceTanKe().PlayerAutoFireScript.PerMouseW;
+            Vector2 perMouseH = XkPlayerCtrl.GetInstanceTanKe().PlayerAutoFireScript.PerMouseH;
+            //crossPos.x = Mathf.Clamp(crossPos.y, perMouseW.x * XkGameCtrl.ScreenWidth, perMouseW.y * XkGameCtrl.ScreenWidth);
+            crossPos.y = Mathf.Clamp(crossPos.y, perMouseH.x * XkGameCtrl.ScreenHeight, perMouseH.y * XkGameCtrl.ScreenHeight);
+        }
+        return crossPos;
+    }
 }
 
 public enum PcvrValState

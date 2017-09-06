@@ -34,10 +34,10 @@ public class XkGameCtrl : MonoBehaviour {
 	 * CameraVRObj[1] -> cameraPlayer2.
 	 */
 	public GameObject[] CameraVRObj;
-	/**
+    /**
 	 * YouLiangDianMin -> 飞机主�?单人油量炸�
 	 */
-	[Range(1, 1000)] public int YouLiangDianMin = 50;
+    [Range(1, 1000)] public int YouLiangDianMin = 50;
 	/**
 	 * YouLiangDianMinSR -> 飞机主�?双人油量炸�
 	 */

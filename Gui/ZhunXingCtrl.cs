@@ -59,24 +59,14 @@ public class ZhunXingCtrl : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate()
 	{
-		Vector3 mousePosInput = Input.mousePosition;
-		if (pcvr.bIsHardWare) {
-			switch (PlayerSt) {
-			case PlayerEnum.PlayerOne:
-				mousePosInput = pcvr.CrossPositionOne;
-				break;
-				
-			case PlayerEnum.PlayerTwo:
-				mousePosInput = pcvr.CrossPositionTwo;
-				break;
-			}
-		}
-		else {
-			mousePosInput.x *= (ScreenUIWith / Screen.width);
-			mousePosInput.y *= (ScreenUIHeight / Screen.height);
-		}
+		Vector3 mousePosInput = pcvr.GetPlayerMousePos(PlayerSt);
+        if (!pcvr.bIsHardWare)
+        {
+            mousePosInput.x *= (ScreenUIWith / Screen.width);
+            mousePosInput.y *= (ScreenUIHeight / Screen.height);
+        }
 
-		if(IsFixZhunXing != Screen.fullScreen) {
+        if (IsFixZhunXing != Screen.fullScreen) {
 			IsFixZhunXing = Screen.fullScreen;
 			int iScreenW = GetSystemMetrics(SM_CXSCREEN);
 			int iScreenH = GetSystemMetrics(SM_CYSCREEN);
