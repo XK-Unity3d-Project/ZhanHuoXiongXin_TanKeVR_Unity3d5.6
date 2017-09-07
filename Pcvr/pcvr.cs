@@ -155,15 +155,9 @@ public class pcvr : MonoBehaviour {
 		InitCrossPosInfoPOne();
 		InitCrossPosInfoPTwo();
 	}
-	
-    void FixedUpdate()
-    {
-        CheckCrossPositionPOne();
-        CheckCrossPositionPTwo();
-    }
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
 	{
         //if (GameTypeCtrl.AppTypeStatic == AppGameType.LianJiServer) {
         //    return;
@@ -189,7 +183,7 @@ public class pcvr : MonoBehaviour {
 			}
 		}
 		else {
-			if (dTime < 0.03f) {
+			if (dTime < 0.005f) {
 				return;
 			}
 		}
