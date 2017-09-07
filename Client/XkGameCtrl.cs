@@ -129,7 +129,7 @@ public class XkGameCtrl : MonoBehaviour {
 	public static int ChuanBoNumPTwo;
 	public static int FeiJiNumPTwo;
 	int AllPlayerKillNpc;
-	int GaoBaoDanBuJiNum = 50;
+	int GaoBaoDanBuJiNum = 150;
 	int DaoDanBuJiNum = 3;
 	public static int DaoDanNumPOne;
 	public static int DaoDanNumPTwo;
@@ -988,8 +988,8 @@ public class XkGameCtrl : MonoBehaviour {
 			}
 
 			GaoBaoDanNumPOne += GaoBaoDanBuJiNum;
-			if (GaoBaoDanNumPOne > 99) {
-				GaoBaoDanNumPOne = 99;
+			if (GaoBaoDanNumPOne > 150) {
+				GaoBaoDanNumPOne = 150;
 			}
 
 			if (DanYaoInfoCtrl.GetInstanceOne() != null) {
@@ -1007,8 +1007,8 @@ public class XkGameCtrl : MonoBehaviour {
 			}
 
 			GaoBaoDanNumPTwo += GaoBaoDanBuJiNum;
-			if (GaoBaoDanNumPTwo > 99) {
-				GaoBaoDanNumPTwo = 99;
+			if (GaoBaoDanNumPTwo > 150) {
+				GaoBaoDanNumPTwo = 150;
 			}
 			if (DanYaoInfoCtrl.GetInstanceTwo() != null) {
 				DanYaoInfoCtrl.GetInstanceTwo().ShowHuoLiJQSprite();
