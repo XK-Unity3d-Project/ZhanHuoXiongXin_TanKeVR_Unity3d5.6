@@ -142,7 +142,8 @@ public class MyCOMDevice : MonoBehaviour {
 				ReadCount += (ReadByteMsg.Length + BufLenReadEnd);
 				IsReadComMsg = true;
 				ReadMsgTimeOutVal = 0f;
-			}
+                pcvr.UpdatePlayerMousePos(ReadByteMsg);
+            }
 			catch (Exception exception)
 			{
 				if (XkGameCtrl.IsGameOnQuit) {

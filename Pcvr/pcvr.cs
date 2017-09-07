@@ -191,11 +191,6 @@ public class pcvr : MonoBehaviour {
 				return;
 			}
 		}
-		else {
-			if (dTime < 0.005f) {
-				return;
-			}
-		}
 		lastUpTime = Time.realtimeSinceStartup;
 		CheckIsPlayerActivePcvr();
 		
@@ -623,6 +618,14 @@ QiNangArray[3]			QiNangArray[2]
 		keyProcess(readMsg);
 	}
 	
+    public static void UpdatePlayerMousePos(byte[] buffer)
+    {
+        MousePositionP1.x = ((buffer[2] & 0x0f) << 8) + buffer[3];
+        MousePositionP1.y = ((buffer[4] & 0x0f) << 8) + buffer[5];
+        MousePositionP2.x = ((buffer[6] & 0x0f) << 8) + buffer[7];
+        MousePositionP2.y = ((buffer[8] & 0x0f) << 8) + buffer[9];
+    }
+
 	/**
 	 * DongGanState == 1 -> 打开动感.
 	 * DongGanState == 0 -> 关闭动感.
