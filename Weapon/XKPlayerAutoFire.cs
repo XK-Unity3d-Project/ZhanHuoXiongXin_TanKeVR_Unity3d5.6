@@ -11,6 +11,7 @@ public enum PlayerAmmoType
 }
 
 public class XKPlayerAutoFire : MonoBehaviour {
+    public XKCalculateGunPosCtrl GunPosCalculate;
     public XKPlayerGunLaser[] GunLaser;
     public Vector2 PerMouseH = new Vector2(0.48f, 0.63f); //[0, 1]
     Vector2 PerMouseW = new Vector2(0f, 1f); //[0, 1]

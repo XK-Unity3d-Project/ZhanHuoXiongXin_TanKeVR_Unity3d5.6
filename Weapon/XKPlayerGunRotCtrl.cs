@@ -88,6 +88,12 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 		if (gunForward != Vector3.zero) {
 			PlayerGunTr.forward = gunForward;
 		}
+        //if (XkPlayerCtrl.GetInstanceTanKe() != null)
+        //{
+        //    Vector3 dir = XkPlayerCtrl.GetInstanceTanKe().PlayerAutoFireScript.GunPosCalculate.CalculateGunForwardVec(PlayerSt);
+        //    Quaternion rot = Quaternion.FromToRotation(Vector3.forward, dir);
+        //    PlayerGunTr.localEulerAngles = rot.eulerAngles;
+        //}
 	}
 
 	void UpdateTankZhuPaoTr()
