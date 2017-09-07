@@ -5,10 +5,10 @@ public class XKTriggerBuJiBaoOpen : MonoBehaviour {
 
 	public GameObject BuJiBaoA;
 	public Transform BuJiBaoPointA;
-	[Range(0.1f, 10f)] public float TimeBuJiA = 1f;
+	[Range(0.1f, 10000f)] public float TimeBuJiA = 1f;
 	public GameObject BuJiBaoB;
 	public Transform BuJiBaoPointB;
-	[Range(0.1f, 10f)] public float TimeBuJiB = 1f;
+	[Range(0.1f, 10000f)] public float TimeBuJiB = 1f;
 	bool IsActiveTrigger;
 	public AiPathCtrl TestPlayerPath;
 	void Start()

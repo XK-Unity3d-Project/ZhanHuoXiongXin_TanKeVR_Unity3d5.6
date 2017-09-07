@@ -42,7 +42,6 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 		AmmoTran = transform;
 		ObjAmmo = gameObject;
 		AmmoTran.parent = XkGameCtrl.PlayerAmmoArray;
-		SpawnAmmoTime = Time.realtimeSinceStartup;
 	}
 	
 	void Update()
@@ -73,8 +72,9 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 		if (!ObjAmmo.activeSelf) {
 			ObjAmmo.SetActive(true);
 			IsDestroyAmmo = false;
-		}
-		AmmoTran = transform;
+        }
+        SpawnAmmoTime = Time.realtimeSinceStartup;
+        AmmoTran = transform;
 		PlayerState = playerSt;
 		MoveAmmoByItween(firePos, ammoMovePath);
 		IsHandleRpc = true;

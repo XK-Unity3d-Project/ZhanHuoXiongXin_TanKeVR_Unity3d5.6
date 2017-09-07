@@ -457,9 +457,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				if (buJiBaoScript != null) {
 					buJiBaoScript.RemoveBuJiBao(PlayerEnum.PlayerTwo); //buJiBaoScript
                 }
-                firePos = GunLaser[1].PlayerCursorTr.position;
             }
-		}
+            firePos = GunLaser[1].PlayerCursorTr.position;
+        }
 		else {
 			ammoForward = obj.transform.forward;
 			firePos = FirePosValTmp * ammoForward + ammoSpawnPos;
