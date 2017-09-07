@@ -80,8 +80,8 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 		CurPY = CurPY > MaxPY ? MaxPY : CurPY;
 		mousePosInput.x = CurPX;
 		mousePosInput.y = CurPY;
-
-		PlayerGunPos = PlayerGunTr.position;
+        
+        PlayerGunPos = PlayerGunTr.position;
 		Vector3 mousePos = mousePosInput + Vector3.forward * OffsetForward;
         Vector3 posTmp = Camera.main.ScreenToWorldPoint(mousePos);
 		Vector3 gunForward = Vector3.Normalize(posTmp - PlayerGunPos);
