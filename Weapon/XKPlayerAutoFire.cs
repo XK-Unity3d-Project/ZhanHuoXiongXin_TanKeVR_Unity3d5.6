@@ -11,6 +11,7 @@ public enum PlayerAmmoType
 }
 
 public class XKPlayerAutoFire : MonoBehaviour {
+    public XKPlayerGunLaser[] GunLaser;
     public Vector2 PerMouseH = new Vector2(0.48f, 0.63f); //[0, 1]
     Vector2 PerMouseW = new Vector2(0f, 1f); //[0, 1]
     public LayerMask FireLayer;
@@ -97,9 +98,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			}
 			
 			InitPlayerAmmoList();
-			InputEventCtrl.GetInstance().ClickFireBtOneEvent += ClickFireBtOneEvent;
+			//InputEventCtrl.GetInstance().ClickFireBtOneEvent += ClickFireBtOneEvent;
 			InputEventCtrl.GetInstance().ClickFireBtTwoEvent += ClickFireBtTwoEvent;
-			InputEventCtrl.GetInstance().ClickDaoDanBtOneEvent += ClickDaoDanBtOneEvent;
+			//InputEventCtrl.GetInstance().ClickDaoDanBtOneEvent += ClickDaoDanBtOneEvent;
 			InputEventCtrl.GetInstance().ClickDaoDanBtTwoEvent += ClickDaoDanBtTwoEvent;
 //			if (Network.peerType == NetworkPeerType.Server) {
 //				InitPlayerAmmoList();
@@ -152,9 +153,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		if (PlayerStEnum == PlayerTypeEnum.CartoonCamera) {
 			return;
 		}
-		CheckPlayerOneFireBt();
+		//CheckPlayerOneFireBt();
 		CheckPlayerTwoFireBt();
-		CheckPSTriggerAutoFire();
+		//CheckPSTriggerAutoFire();
 
 		//检测队友碰撞提示.
 //		if (XkGameCtrl.GameModeVal == GameMode.LianJi) {
@@ -440,10 +441,10 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		Ray ray = Camera.main.ScreenPointToRay(mousePosInput);
 		RaycastHit hit;
 		if (!IsPSAutoFire) {
-			firePos = FirePosValTmp * ammoForward + ammoSpawnPos;
-			if (Physics.Raycast(ray, out hit, FireRayDirLen, FireLayer.value)) {
+			//firePos = FirePosValTmp * ammoForward + ammoSpawnPos;
+            if (Physics.Raycast(ray, out hit, FireRayDirLen, FireLayer.value)) {
 				//Debug.Log("Player fire obj -> "+hit.collider.name);
-				firePos = hit.point;
+				//firePos = hit.point;
 				if (ammoScript.AmmoType == PlayerAmmoType.PuTongAmmo) {
 					XKNpcHealthCtrl healthScript = hit.collider.GetComponent<XKNpcHealthCtrl>();
 					if (healthScript != null && !healthScript.GetIsDeathNpc()) {
@@ -454,8 +455,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				BuJiBaoCtrl buJiBaoScript = hit.collider.GetComponent<BuJiBaoCtrl>();
 				if (buJiBaoScript != null) {
 					buJiBaoScript.RemoveBuJiBao(PlayerEnum.PlayerTwo); //buJiBaoScript
-				}
-			}
+                }
+                firePos = GunLaser[1].PlayerCursorTr.position;
+            }
 		}
 		else {
 			ammoForward = obj.transform.forward;
@@ -941,18 +943,20 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		Vector3 ammoForward = Vector3.Normalize( posTmp - ammoSpawnPos );
 		Ray ray = Camera.main.ScreenPointToRay(mousePosInput);
 		RaycastHit hit;
-		if (!IsPSAutoFire) {
-			firePos = FirePosValTmp * ammoForward + ammoSpawnPos;
+		if (!IsPSAutoFire)
+        {
+            //firePos = FirePosValTmp * ammoForward + ammoSpawnPos;
 			if (Physics.Raycast(ray, out hit, FireRayDirLen, FireLayer.value)) {
 				//Debug.Log("Player fire obj -> "+hit.collider.name);
-				firePos = hit.point;
+				//firePos = hit.point;
 				
 				BuJiBaoCtrl buJiBaoScript = hit.collider.GetComponent<BuJiBaoCtrl>();
 				if (buJiBaoScript != null) {
 					buJiBaoScript.RemoveBuJiBao(PlayerEnum.PlayerTwo); //buJiBaoScript
 				}
-			}
-		}
+            }
+            firePos = GunLaser[1].PlayerCursorTr.position;
+        }
 		else {
 			ammoForward = obj.transform.forward;
 			firePos = FirePosValTmp * ammoForward + ammoSpawnPos;
