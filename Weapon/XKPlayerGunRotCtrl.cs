@@ -49,19 +49,8 @@ public class XKPlayerGunRotCtrl : MonoBehaviour
 			}
         }
     }
-
-	// Update is called once per frame
-	void FixedUpdate()
-	{
-		//UpdatePlayerMainCamera();
-		UpdatePlayerGunRot();
-		UpdateTankZhuPaoTr();
-    }
-
-    // Update is called once per frame
-    void Update()
+    public void UpdatePlayerTankPaoTongTr()
     {
-        //UpdatePlayerMainCamera();
         UpdatePlayerGunRot();
         UpdateTankZhuPaoTr();
     }

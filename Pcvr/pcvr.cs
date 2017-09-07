@@ -172,7 +172,16 @@ public class pcvr : MonoBehaviour {
 
 		CheckCrossPositionPOne();
 		CheckCrossPositionPTwo();
-		if (!bIsHardWare) {
+        if (XKPlayerGunRotCtrl.GetInstanceOne() != null && XkGameCtrl.IsActivePlayerOne)
+        {
+            XKPlayerGunRotCtrl.GetInstanceOne().UpdatePlayerTankPaoTongTr();
+        }
+        if (XKPlayerGunRotCtrl.GetInstanceTwo() != null && XkGameCtrl.IsActivePlayerTwo)
+        {
+            XKPlayerGunRotCtrl.GetInstanceTwo().UpdatePlayerTankPaoTongTr();
+        }
+
+        if (!bIsHardWare) {
 			return;
 		}
 		
