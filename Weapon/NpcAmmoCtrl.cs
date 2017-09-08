@@ -204,7 +204,7 @@ public class NpcAmmoCtrl : MonoBehaviour
 			IsAimPlayer = false;
 		}
 
-		if (!IsAimPlayer) {
+        if (!IsAimPlayer && !IsMoveToAttackPoint) {
 			float disPlayer = 0f;
 			if (XkPlayerCtrl.PlayerTranFeiJi != null) {
 				disPlayer = Vector3.Distance(AmmoTran.position, XkPlayerCtrl.PlayerTranFeiJi.position);
@@ -237,7 +237,7 @@ public class NpcAmmoCtrl : MonoBehaviour
 		}
 
 		Physics.Raycast(startPos, forwardVal, out hitInfo, disVal, NpcAmmoHitLayer);
-		if (hitInfo.collider != null){
+		if (hitInfo.collider != null && !IsMoveToAttackPoint){
 			firePos = hitInfo.point;
 			//Debug.Log("*****npcAmmoHitObj "+hitInfo.collider.name);
 		}
