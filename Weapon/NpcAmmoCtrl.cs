@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NpcAmmoCtrl : MonoBehaviour {
-	
-	public PlayerAmmoType AmmoType = PlayerAmmoType.PuTongAmmo;
+public class NpcAmmoCtrl : MonoBehaviour
+{
+    /// <summary>
+    /// 使npc子弹朝向主角attack点运动.
+    /// </summary>
+    public bool IsMoveToAttackPoint = false;
+    public PlayerAmmoType AmmoType = PlayerAmmoType.PuTongAmmo;
 	[Range(1f, 4000f)] public float MvSpeed = 50f; //km/h
 	[Range(0f, 100f)] public float LifeTime = 0f;
 	public GameObject AmmoExplode;
@@ -134,7 +138,7 @@ public class NpcAmmoCtrl : MonoBehaviour {
 
 	Vector3 GetTanKePlayerFirePos()
 	{
-		int randVal = Random.Range(0, 100);
+		int randVal = IsMoveToAttackPoint == false ? Random.Range(0, 100) : 100;
 		Vector3 firePos = Vector3.zero;
 		if (randVal < 25) {
 			firePos = XkPlayerCtrl.PlayerTranTanKe.position;
@@ -143,7 +147,8 @@ public class NpcAmmoCtrl : MonoBehaviour {
 			firePos = XKPlayerCamera.TanKeCameraTan.position;
 		}
 		else {
-			int lengthVal = XkPlayerCtrl.GetInstanceTanKe().NpcFirePosArray.Length;
+            randVal = Random.Range(0, 100);
+            int lengthVal = XkPlayerCtrl.GetInstanceTanKe().NpcFirePosArray.Length;
 			if (lengthVal < 1) {
 				if (randVal % 2 == 0) {
 					firePos = XkPlayerCtrl.PlayerTranTanKe.position;
