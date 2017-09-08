@@ -1798,14 +1798,6 @@ QiNangArray[3]			QiNangArray[2]
                     }
             }
         }
-
-        if (XkPlayerCtrl.GetInstanceTanKe() != null)
-        {
-            //Vector2 perMouseW = XkPlayerCtrl.GetInstanceTanKe().PlayerAutoFireScript.PerMouseW;
-            Vector2 perMouseH = XkPlayerCtrl.GetInstanceTanKe().PlayerAutoFireScript.PerMouseH;
-            //crossPos.x = Mathf.Clamp(crossPos.y, perMouseW.x * XkGameCtrl.ScreenWidth, perMouseW.y * XkGameCtrl.ScreenWidth);
-            crossPos.y = Mathf.Clamp(crossPos.y, perMouseH.x * XkGameCtrl.ScreenHeight, perMouseH.y * XkGameCtrl.ScreenHeight);
-        }
         crossPos.z = 0f;
         return crossPos;
     }

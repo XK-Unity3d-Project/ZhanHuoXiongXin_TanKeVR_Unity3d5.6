@@ -13,8 +13,6 @@ public enum PlayerAmmoType
 public class XKPlayerAutoFire : MonoBehaviour {
     public XKCalculateGunPosCtrl GunPosCalculate;
     public XKPlayerGunLaser[] GunLaser;
-    public Vector2 PerMouseH = new Vector2(0.48f, 0.63f); //[0, 1]
-    Vector2 PerMouseW = new Vector2(0f, 1f); //[0, 1]
     public LayerMask FireLayer;
 	public TweenRotation[] QianGuanTwRot;
 	public Transform[] AmmoStartPosOne;
@@ -70,12 +68,6 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 	// Use this for initialization
 	void Start()
 	{
-        //AmmoParticleList = new List<AmmoParticleDt>(6);
-        PerMouseH.x = Mathf.Clamp01(PerMouseH.x);
-        PerMouseH.y = Mathf.Clamp01(PerMouseH.y);
-        PerMouseW.x = Mathf.Clamp01(PerMouseW.x);
-        PerMouseW.y = Mathf.Clamp01(PerMouseW.y);
-
         for (int i = 0; i < QianGuanTwRot.Length; i++) {
 			QianGuanTwRot[i].enabled = false;
 		}
