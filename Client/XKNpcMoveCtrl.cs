@@ -62,9 +62,11 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 	NetworkView NetViewCom;
 	int RecordAimPlayerState = -1;
 	bool IsHandleRpc;
-	void Awake()
+    XKSpawnParticle SpawnParticleCom;
+    void Awake()
 	{
-		if (IsAniMove) {
+        SpawnParticleCom = gameObject.AddComponent<XKSpawnParticle>();
+        if (IsAniMove) {
 			SetIsRemoveNpcObj();
 		}
 
@@ -1480,23 +1482,26 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 				RealNpcTran.localPosition = Vector3.zero;
 			}
 
-			if (DeathExplode != null) {
-				if (!DeathExplode.activeSelf) {
-					DeathExplode.SetActive(true);
-				}
+            if (DeathExplode != null)
+            {
+                if (!DeathExplode.activeSelf)
+                {
+                    DeathExplode.SetActive(true);
+                }
 
-				GameObject objExplode = null;
-				if (NpcState == NpcType.LandNpc) {
-					objExplode = (GameObject)Instantiate(DeathExplode, RealNpcTran.position, RealNpcTran.rotation);
-				}
-				else {
-					objExplode = (GameObject)Instantiate(DeathExplode, NpcTran.position, NpcTran.rotation);
-				}
-				objExplode.transform.parent = XkGameCtrl.NpcAmmoArray;
-				XkGameCtrl.CheckObjDestroyThisTimed(objExplode);
-			}
-			
-			if (BuWaWaRigidbody != null && !IsZaiTiNpc) {
+                GameObject objExplode = null;
+                if (NpcState == NpcType.LandNpc)
+                {
+                    objExplode = SpawnParticleCom.SpawnParticleObject(DeathExplode, RealNpcTran.position, RealNpcTran.rotation);
+                }
+                else
+                {
+                    objExplode = SpawnParticleCom.SpawnParticleObject(DeathExplode, NpcTran.position, NpcTran.rotation);
+                }
+                objExplode.transform.parent = XkGameCtrl.NpcAmmoArray;
+            }
+
+            if (BuWaWaRigidbody != null && !IsZaiTiNpc) {
 				Rigidbody rigCom = NpcObj.GetComponent<Rigidbody>();
 				if (rigCom == null) {
 					rigCom = NpcObj.AddComponent<Rigidbody>();

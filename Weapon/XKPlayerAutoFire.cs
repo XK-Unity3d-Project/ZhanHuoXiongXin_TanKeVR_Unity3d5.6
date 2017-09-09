@@ -65,9 +65,11 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 	float TimeAimPlayerPOne;
 	float TimeAimPlayerPTwo;
 	PlayerTypeEnum PlayerStEnum;
-	// Use this for initialization
-	void Start()
-	{
+    XKSpawnParticle SpawnParticleCom;
+    // Use this for initialization
+    void Start()
+    {
+        SpawnParticleCom = gameObject.AddComponent<XKSpawnParticle>();
         for (int i = 0; i < QianGuanTwRot.Length; i++) {
 			QianGuanTwRot[i].enabled = false;
 		}
@@ -185,7 +187,6 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		}
 	}
 
-	GameObject[] AmmoParticleObj = new GameObject[2];
 	void CheckPlayerOneFireBt()
 	{
 		if (XKPlayerCamera.IndexPlayerNum != 0) {
@@ -252,20 +253,17 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		
 		bool isSpawnGaoBaoDan = false;
 		if (XkGameCtrl.GaoBaoDanNumPOne <= 0) {
-			if (AmmoParticle[0] != null && AmmoParticleObj[0] == null) {
-				obj = (GameObject)Instantiate(AmmoParticle[0], ammoSpawnPos, AmmoStartPosOne[0].rotation);
+			if (AmmoParticle[0] != null) {
+				obj = SpawnParticleCom.SpawnParticleObject(AmmoParticle[0], ammoSpawnPos, AmmoStartPosOne[0].rotation);
 				obj.transform.parent = AmmoStartPosOne[0];
-				AmmoParticleObj[0] = obj;
-				XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 			obj = GetPlayerAmmo(PlayerAmmoType.PuTongAmmo, ammoSpawnPos, AmmoStartPosOne[0].rotation);
 		}
 		else {
 			isSpawnGaoBaoDan = true;
 			if (GaoBaoAmmoParticle[0] != null) {
-				obj = (GameObject)Instantiate(GaoBaoAmmoParticle[0], ammoSpawnPos, AmmoStartPosOne[0].rotation);
+				obj = SpawnParticleCom.SpawnParticleObject(GaoBaoAmmoParticle[0], ammoSpawnPos, AmmoStartPosOne[0].rotation);
 				obj.transform.parent = AmmoStartPosOne[0];
-                XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 			XkGameCtrl.GetInstance().SubGaoBaoDanNumPOne();
 			obj = GetPlayerAmmo(PlayerAmmoType.GaoBaoAmmo, ammoSpawnPos, AmmoStartPosOne[0].rotation);
@@ -404,20 +402,17 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 
 		bool isSpawnGaoBaoDan = false;
 		if (XkGameCtrl.GaoBaoDanNumPTwo <= 0) {
-			if (AmmoParticle[0] != null && AmmoParticleObj[1] == null) {
-				obj = (GameObject)Instantiate(AmmoParticle[0], ammoSpawnPos, AmmoStartPosTwo[0].rotation);
-				AmmoParticleObj[1] = obj;
+			if (AmmoParticle[0] != null) {
+				obj = SpawnParticleCom.SpawnParticleObject(AmmoParticle[0], ammoSpawnPos, AmmoStartPosTwo[0].rotation);
 				obj.transform.parent = AmmoStartPosTwo[0];
-				XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 			obj = GetPlayerAmmo(PlayerAmmoType.PuTongAmmo, ammoSpawnPos, AmmoStartPosTwo[0].rotation);
 		}
 		else {
 			isSpawnGaoBaoDan = true;
 			if (GaoBaoAmmoParticle[0] != null) {
-				obj = (GameObject)Instantiate(GaoBaoAmmoParticle[0], ammoSpawnPos, AmmoStartPosTwo[0].rotation);
+				obj = SpawnParticleCom.SpawnParticleObject(GaoBaoAmmoParticle[0], ammoSpawnPos, AmmoStartPosTwo[0].rotation);
 				obj.transform.parent = AmmoStartPosTwo[0];
-                XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 			XkGameCtrl.GetInstance().SubGaoBaoDanNumPTwo();
 			obj = GetPlayerAmmo(PlayerAmmoType.GaoBaoAmmo, ammoSpawnPos, AmmoStartPosTwo[0].rotation);
@@ -515,7 +510,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 //				PlayerAudio[0].Play();
 
 				if (AmmoParticle[ammoSpawnIndex] != null) {
-					obj = (GameObject)Instantiate(AmmoParticle[ammoSpawnIndex], AmmoStartPosOne[ammoSpawnIndex].position,
+					obj = SpawnParticleCom.SpawnParticleObject(AmmoParticle[ammoSpawnIndex], AmmoStartPosOne[ammoSpawnIndex].position,
 					                              AmmoStartPosOne[ammoSpawnIndex].rotation);
 					obj.transform.parent = AmmoStartPosOne[ammoSpawnIndex];
 				}
@@ -532,7 +527,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 //				PlayerAudio[1].Play();
 
 				if (GaoBaoAmmoParticle[ammoSpawnIndex] != null) {
-					obj = (GameObject)Instantiate(GaoBaoAmmoParticle[ammoSpawnIndex], AmmoStartPosOne[ammoSpawnIndex].position,
+					obj = SpawnParticleCom.SpawnParticleObject(GaoBaoAmmoParticle[ammoSpawnIndex], AmmoStartPosOne[ammoSpawnIndex].position,
 					                              AmmoStartPosOne[ammoSpawnIndex].rotation);
 					obj.transform.parent = AmmoStartPosOne[ammoSpawnIndex];
 				}
@@ -547,9 +542,8 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 					PlayerAudio[2].Stop();
 				}
 				PlayerAudio[2].Play();
-
 				if (DaoDanAmmoParticle[ammoSpawnIndex] != null) {
-					obj = (GameObject)Instantiate(DaoDanAmmoParticle[ammoSpawnIndex], DaoDanAmmoPosOne[ammoSpawnIndex].position,
+					obj = SpawnParticleCom.SpawnParticleObject(DaoDanAmmoParticle[ammoSpawnIndex], DaoDanAmmoPosOne[ammoSpawnIndex].position,
 					                              DaoDanAmmoPosOne[ammoSpawnIndex].rotation);
 					obj.transform.parent = DaoDanAmmoPosOne[ammoSpawnIndex];
 				}
@@ -569,7 +563,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 //				PlayerAudio[3].Play();
 
 				if (AmmoParticle[ammoSpawnIndex] != null) {
-					obj = (GameObject)Instantiate(AmmoParticle[ammoSpawnIndex], AmmoStartPosTwo[ammoSpawnIndex].position,
+					obj = SpawnParticleCom.SpawnParticleObject(AmmoParticle[ammoSpawnIndex], AmmoStartPosTwo[ammoSpawnIndex].position,
 					                              AmmoStartPosTwo[ammoSpawnIndex].rotation);
 					obj.transform.parent = AmmoStartPosTwo[ammoSpawnIndex];
 				}
@@ -586,7 +580,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 //				PlayerAudio[4].Play();
 
 				if (GaoBaoAmmoParticle[ammoSpawnIndex] != null) {
-					obj = (GameObject)Instantiate(GaoBaoAmmoParticle[ammoSpawnIndex], AmmoStartPosTwo[ammoSpawnIndex].position,
+					obj = SpawnParticleCom.SpawnParticleObject(GaoBaoAmmoParticle[ammoSpawnIndex], AmmoStartPosTwo[ammoSpawnIndex].position,
 					                              AmmoStartPosTwo[ammoSpawnIndex].rotation);
 					obj.transform.parent = AmmoStartPosTwo[ammoSpawnIndex];
 				}
@@ -603,7 +597,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				PlayerAudio[5].Play();
 
 				if (DaoDanAmmoParticle[ammoSpawnIndex] != null) {
-					obj = (GameObject)Instantiate(DaoDanAmmoParticle[ammoSpawnIndex], DaoDanAmmoPosTwo[ammoSpawnIndex].position,
+					obj = SpawnParticleCom.SpawnParticleObject(DaoDanAmmoParticle[ammoSpawnIndex], DaoDanAmmoPosTwo[ammoSpawnIndex].position,
 					                              DaoDanAmmoPosTwo[ammoSpawnIndex].rotation);
 					obj.transform.parent = DaoDanAmmoPosTwo[ammoSpawnIndex];
 				}
@@ -804,9 +798,8 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		Vector3 ammoSpawnPos = DaoDanAmmoPosOne[0].position;
 		GameObject obj = null;
 		if (DaoDanAmmoParticle[0] != null) {
-			obj = (GameObject)Instantiate(DaoDanAmmoParticle[0], ammoSpawnPos, DaoDanAmmoPosOne[0].rotation);
+			obj = SpawnParticleCom.SpawnParticleObject(DaoDanAmmoParticle[0], ammoSpawnPos, DaoDanAmmoPosOne[0].rotation);
 			obj.transform.parent = XkGameCtrl.PlayerAmmoArray;
-			XkGameCtrl.CheckObjDestroyThisTimed(obj);
 		}
 		
 		if (PlayerAudio[2].isPlaying) {
@@ -914,9 +907,8 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		Vector3 ammoSpawnPos = DaoDanAmmoPosTwo[0].position;
 		GameObject obj = null;
 		if (DaoDanAmmoParticle[0] != null) {
-			obj = (GameObject)Instantiate(DaoDanAmmoParticle[0], ammoSpawnPos, DaoDanAmmoPosTwo[0].rotation);
+			obj = SpawnParticleCom.SpawnParticleObject(DaoDanAmmoParticle[0], ammoSpawnPos, DaoDanAmmoPosTwo[0].rotation);
 			obj.transform.parent = XkGameCtrl.PlayerAmmoArray;
-			XkGameCtrl.CheckObjDestroyThisTimed(obj);
 		}
 		
 		if (PlayerAudio[5].isPlaying) {

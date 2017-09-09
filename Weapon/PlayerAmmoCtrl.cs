@@ -29,9 +29,11 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 	bool IsDonotHurtNpc;
 	TrailRenderer TrailScript;
 	float TrailTime = 3f;
-	void Awake()
-	{
-		if (TrailScript == null) {
+    XKSpawnParticle SpawnParticleCom;
+    void Awake()
+    {
+        SpawnParticleCom = gameObject.AddComponent<XKSpawnParticle>();
+        if (TrailScript == null) {
 			TrailScript = GetComponentInChildren<TrailRenderer>();
 			if (TrailScript != null) {
 				TrailScript.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -274,15 +276,15 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 				hitPos = hit.point;
 				Vector3 normalVal = hit.normal;
 				Quaternion rotVal = Quaternion.LookRotation(normalVal);
-				obj = (GameObject)Instantiate(objParticle, hitPos, rotVal);
+				obj = SpawnParticleCom.SpawnParticleObject(objParticle, hitPos, rotVal);
 				obj.transform.up = normalVal;
 			}
 			else {
-				obj = (GameObject)Instantiate(objParticle, hitPos, transform.rotation);
+				obj = SpawnParticleCom.SpawnParticleObject(objParticle, hitPos, transform.rotation);
 			}
 		}
 		else {
-			obj = (GameObject)Instantiate(objParticle, hitPos, transform.rotation);
+			obj = SpawnParticleCom.SpawnParticleObject(objParticle, hitPos, transform.rotation);
 		}
 		tran = obj.transform;
 		tran.parent = XkGameCtrl.PlayerAmmoArray;

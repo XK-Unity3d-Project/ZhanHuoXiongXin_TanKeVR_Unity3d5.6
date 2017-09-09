@@ -20,17 +20,18 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 	int CountFireRunVal;
 	int CountFireRun = 5;
 	bool IsAimFeiJiPlayer;
-	GameObject AmmoLiZiObj;
 	RuntimeAnimatorController NpcRunAniCtrl;
-	// Use this for initialization
-	void Awake()
+    XKSpawnParticle SpawnParticleCom;
+    // Use this for initialization
+    void Awake()
 	{
 		InitNpcAmmoList();
 		CountHuanDan = Random.Range(3, 8);
 		AnimatorCom = GetComponent<Animator>();
 		NpcRunAniCtrl = AnimatorCom.runtimeAnimatorController;
 		NpcScript = GetComponentInParent<XKNpcMoveCtrl>();
-	}
+        SpawnParticleCom = gameObject.AddComponent<XKSpawnParticle>();
+    }
 
 	void Update()
 	{
@@ -235,7 +236,6 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 			StartSpawnNpcAmmo();
 		}
 	}
-
 	void StartSpawnNpcAmmo()
 	{
 		if (AudioNpcFire != null) {
@@ -247,15 +247,15 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 
 		GameObject obj = null;
 		Transform tran = null;
-		if (AmmoLiZiPrefab != null && AmmoLiZiObj == null) {
-			obj = (GameObject)Instantiate(AmmoLiZiPrefab, AmmoSpawnTran.position, AmmoSpawnTran.rotation);
-			tran = obj.transform;
-			tran.parent = XkGameCtrl.NpcAmmoArray;
-			AmmoLiZiObj = obj;
-			XkGameCtrl.CheckObjDestroyThisTimed(obj);
-		}
+		if (AmmoLiZiPrefab != null) {
+            obj = SpawnParticleCom.SpawnParticleObject(AmmoLiZiPrefab, AmmoSpawnTran.position, AmmoSpawnTran.rotation);
+            if (obj.transform.parent != XkGameCtrl.NpcAmmoArray)
+            {
+                obj.transform.parent = XkGameCtrl.NpcAmmoArray;
+            }
+        }
 
-		PlayerAmmoCtrl ammoPlayerScript = AmmoPrefab.GetComponent<PlayerAmmoCtrl>();
+        PlayerAmmoCtrl ammoPlayerScript = AmmoPrefab.GetComponent<PlayerAmmoCtrl>();
 		if (ammoPlayerScript != null && !XkGameCtrl.GetInstance().IsCartoonShootTest) {
 			return;
 		}

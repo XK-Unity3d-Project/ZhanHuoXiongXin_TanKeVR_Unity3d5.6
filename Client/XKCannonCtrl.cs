@@ -8,7 +8,6 @@ public class XKCannonCtrl : MonoBehaviour {
 	public GameObject DaPaoAmmo;
 	public AudioSource AudioCannonFire;
 	public GameObject DaPaoAmmoLiZi;
-	GameObject[] DaPaoAmmoLiZiObj;
 	public Transform PaoGuan;
 	public Transform[] SpawnAmmoPoint;
 	[Range(1f, 1000f)] public float FireDis = 50f;
@@ -46,10 +45,12 @@ public class XKCannonCtrl : MonoBehaviour {
 	bool IsActiveTrigger;
 	bool IsActiveFireTrigger;
 	bool IsOutputError = false;
-	// Use this for initialization
-	void Start()
-	{
-		if (DeathExplodePoint == null) {
+    XKSpawnParticle SpawnParticleCom;
+    // Use this for initialization
+    void Start()
+    {
+        SpawnParticleCom = gameObject.AddComponent<XKSpawnParticle>();
+        if (DeathExplodePoint == null) {
 			DeathExplodePoint = transform;
 		}
 
@@ -102,7 +103,6 @@ public class XKCannonCtrl : MonoBehaviour {
 		if (SpawnAmmoPoint.Length > 1) {
 			IsDouGuanDaPao = true;
 		}
-		DaPaoAmmoLiZiObj = new GameObject[SpawnAmmoPoint.Length];
 		InitNpcAmmoList();
 
 		NpcMoveScript = GetComponentInParent<XKNpcMoveCtrl>();
@@ -599,11 +599,9 @@ public class XKCannonCtrl : MonoBehaviour {
 						}
 					}
 
-					if (DaPaoAmmoLiZiObj[0] == null) {
-						obj = (GameObject)Instantiate(DaPaoAmmoLiZi, SpawnAmmoPoint[0].position, SpawnAmmoPoint[0].rotation);
+					if (DaPaoAmmoLiZi  != null) {
+						obj = SpawnParticleCom.SpawnParticleObject(DaPaoAmmoLiZi, SpawnAmmoPoint[0].position, SpawnAmmoPoint[0].rotation);
 						tran = obj.transform;
-						DaPaoAmmoLiZiObj[0] = obj;
-						XkGameCtrl.CheckObjDestroyThisTimed(obj);
 					}
 
 					if (!SpawnAmmoPoint[0].gameObject.activeSelf) {
@@ -677,11 +675,10 @@ public class XKCannonCtrl : MonoBehaviour {
 				}
 			}
 
-			if (DaPaoAmmoLiZiObj[count] == null) {
-				obj = (GameObject)Instantiate(DaPaoAmmoLiZi, SpawnAmmoPoint[count].position, SpawnAmmoPoint[count].rotation);
+			if (DaPaoAmmoLiZi != null)
+            {
+                obj = SpawnParticleCom.SpawnParticleObject(DaPaoAmmoLiZi, SpawnAmmoPoint[count].position, SpawnAmmoPoint[count].rotation);
 				tran = obj.transform;
-				DaPaoAmmoLiZiObj[count] = obj;
-				XkGameCtrl.CheckObjDestroyThisTimed(obj);
 			}
 
 			if (IsHiddenAmmoSpawnPoint) {
@@ -725,10 +722,8 @@ public class XKCannonCtrl : MonoBehaviour {
 			if (!DeathExplode.activeSelf) {
 				DeathExplode.SetActive(true);
 			}
-			GameObject objExplode = null;
-			objExplode = (GameObject)Instantiate(DeathExplode, DeathExplodePoint.position, DeathExplodePoint.rotation);
+            GameObject objExplode = SpawnParticleCom.SpawnParticleObject(DeathExplode, DeathExplodePoint.position, DeathExplodePoint.rotation);
 			objExplode.transform.parent = XkGameCtrl.NpcAmmoArray;
-			XkGameCtrl.CheckObjDestroyThisTimed(objExplode);
 		}
 
 		int max = DaPaoHiddenArray.Length;
@@ -749,17 +744,16 @@ public class XKCannonCtrl : MonoBehaviour {
 
 		//ClearNpcAmmoList();
 		if (key == 1) {
-			//XkGameCtrl.GetInstance().AddPlayerKillNpc(playerSt, NpcJiFenEnum.CheLiang);
-			if (DeathExplode != null) {
-				if (!DeathExplode.activeSelf) {
-					DeathExplode.SetActive(true);
-				}
-				GameObject objExplode = null;
-				objExplode = (GameObject)Instantiate(DeathExplode, DeathExplodePoint.position, DeathExplodePoint.rotation);
-				objExplode.transform.parent = XkGameCtrl.NpcAmmoArray;
-				XkGameCtrl.CheckObjDestroyThisTimed(objExplode);
-			}
-		}
+            if (DeathExplode != null)
+            {
+                if (!DeathExplode.activeSelf)
+                {
+                    DeathExplode.SetActive(true);
+                }
+                GameObject objExplode = SpawnParticleCom.SpawnParticleObject(DeathExplode, DeathExplodePoint.position, DeathExplodePoint.rotation);
+                objExplode.transform.parent = XkGameCtrl.NpcAmmoArray;
+            }
+        }
 		XkGameCtrl.GetInstance().RemoveNpcTranFromList(CannonTran);
 
 		float timeVal = 0f;

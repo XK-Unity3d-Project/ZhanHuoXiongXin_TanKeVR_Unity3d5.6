@@ -19,7 +19,6 @@ public class XkNpcZaiTiCtrl : MonoBehaviour {
 	public float[] TimeFireAmmo;//发射子弹间隔时间.
 	public GameObject[] AmmoPrefabTeShu;
 	public GameObject[] AmmoLZPrefabTeShu;
-	GameObject[] AmmoLZObjTeShu;
 	public AudioSource[] AudioTeShuNpcFire;
 	public Transform[] AmmoSpawnTranTeShu;
 	public GameObject DeathExplode;
@@ -33,9 +32,11 @@ public class XkNpcZaiTiCtrl : MonoBehaviour {
 	float[] TimeTeShuFire;
 	XKSpawnNpcPoint SpawnPointScript;
 	bool IsAimFeiJiPlayer;
-	void Awake()
+    XKSpawnParticle SpawnParticleCom;
+    void Awake()
 	{
-		if (NpcAniController.Length > 0) {
+        SpawnParticleCom = gameObject.AddComponent<XKSpawnParticle>();
+        if (NpcAniController.Length > 0) {
 			for (int i = 0; i < NpcAniController.Length; i++) {
 				if (NpcAniController[i] == null) {
 					Debug.LogWarning("NpcAniController was wrong!");
@@ -64,7 +65,6 @@ public class XkNpcZaiTiCtrl : MonoBehaviour {
 					TimeFireAmmo[i] = 0.005f;
 				}
 			}
-			AmmoLZObjTeShu = new GameObject[AmmoLZPrefabTeShu.Length];
 			InitNpcAmmoList();
 		}
 
@@ -256,17 +256,16 @@ public class XkNpcZaiTiCtrl : MonoBehaviour {
 					AudioTeShuNpcFire[i].Play();
 				}
 
-				if (AmmoLZPrefabTeShu != null && AmmoLZPrefabTeShu[i] != null && AmmoLZObjTeShu[i] == null) {
-					obj = (GameObject)Instantiate(AmmoLZPrefabTeShu[i],
-					                              AmmoSpawnTranTeShu[i].position, AmmoSpawnTranTeShu[i].rotation);
-					
-					tran = obj.transform;
-					AmmoLZObjTeShu[i] = obj;
-					XkGameCtrl.CheckObjDestroyThisTimed(obj);
-					tran.parent = AmmoSpawnTranTeShu[i];
-				}
-				
-				PlayerAmmoCtrl ammoPlayerScript = AmmoPrefabTeShu[i].GetComponent<PlayerAmmoCtrl>();
+                if (AmmoLZPrefabTeShu != null && AmmoLZPrefabTeShu[i] != null)
+                {
+                    obj = SpawnParticleCom.SpawnParticleObject(AmmoLZPrefabTeShu[i],
+                                                  AmmoSpawnTranTeShu[i].position, AmmoSpawnTranTeShu[i].rotation);
+
+                    tran = obj.transform;
+                    tran.parent = AmmoSpawnTranTeShu[i];
+                }
+
+                PlayerAmmoCtrl ammoPlayerScript = AmmoPrefabTeShu[i].GetComponent<PlayerAmmoCtrl>();
 				if (ammoPlayerScript != null && !XkGameCtrl.GetInstance().IsCartoonShootTest) {
 					continue;
 				}
