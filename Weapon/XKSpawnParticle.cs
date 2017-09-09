@@ -34,7 +34,7 @@ public class XKSpawnParticle : MonoBehaviour
             throw;
         }
     }
-    public GameObject SpawnParticleObject(GameObject particleObj, Vector3 pos, Quaternion rot)
+    public GameObject SpawnParticleObject(GameObject particleObj, Vector3 pos, Quaternion rot, bool isCanDestory = false)
     {
         DestroyThisTimed destroyThisCom = FindeParticleManageFromList(particleObj);
         if (destroyThisCom == null)
@@ -46,7 +46,7 @@ public class XKSpawnParticle : MonoBehaviour
             particleDt.ParticleObject = obj;
             particleDt.DestroyThisCom = destroyThisCom;
             ParticleDtList.Add(particleDt);
-            destroyThisCom.Init();
+            destroyThisCom.Init(isCanDestory);
         }
         else
         {

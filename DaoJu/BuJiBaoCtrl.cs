@@ -24,9 +24,11 @@ public class BuJiBaoCtrl : MonoBehaviour {
 	bool IsDeath;
 	bool IsDelayDestroy;
 	NetworkView NetworkViewCom;
-	void Start()
-	{
-		NetworkViewCom = GetComponent<NetworkView>();
+    XKSpawnParticle SpawnParticleCom;
+    void Start()
+    {
+        SpawnParticleCom = gameObject.AddComponent<XKSpawnParticle>();
+        NetworkViewCom = GetComponent<NetworkView>();
 		if (transform.parent != XkGameCtrl.MissionCleanup) {
 			transform.parent = XkGameCtrl.MissionCleanup;
 		}
@@ -87,8 +89,8 @@ public class BuJiBaoCtrl : MonoBehaviour {
 		if (key != PlayerEnum.Null || keyHit == 1) {
 			XKGlobalData.GetInstance().PlayAudioHitBuJiBao();
 			if (ExplodeObj != null) {
-				GameObject obj = (GameObject)Instantiate(ExplodeObj, transform.position, transform.rotation);
-				XkGameCtrl.CheckObjDestroyThisTimed(obj);
+				GameObject obj = SpawnParticleCom.SpawnParticleObject(ExplodeObj, transform.position, transform.rotation, true);
+                obj.transform.parent = XkGameCtrl.NpcAmmoArray;
 			}
 			
 			if (Network.peerType != NetworkPeerType.Server || XkGameCtrl.GetInstance().IsOpenVR) {
@@ -138,12 +140,12 @@ public class BuJiBaoCtrl : MonoBehaviour {
 		IsDeath = true;
 
 		if (ExplodeObj != null) {
-			GameObject obj = (GameObject)Instantiate(ExplodeObj, transform.position, transform.rotation);
-			XkGameCtrl.CheckObjDestroyThisTimed(obj);
-		}
+			GameObject obj = SpawnParticleCom.SpawnParticleObject(ExplodeObj, transform.position, transform.rotation, true);
+            obj.transform.parent = XkGameCtrl.NpcAmmoArray;
+        }
 		DestroyNetObj(gameObject);
 	}
-
+    
 	void DestroyNetObj(GameObject obj)
 	{
 		if (Network.peerType == NetworkPeerType.Disconnected) {
