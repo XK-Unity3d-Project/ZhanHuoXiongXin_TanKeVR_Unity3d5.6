@@ -121,7 +121,7 @@ public class GameMovieCtrl : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-        Cursor.visible = !pcvr.bIsHardWare;
+        //Cursor.visible = !pcvr.bIsHardWare;
 		MovieRender = GetComponent<Renderer>();
 		if (XKGlobalData.GetInstance() != null) {
 			AudioListener.volume = (float)XKGlobalData.GameAudioVolume / 10f;
@@ -147,7 +147,7 @@ public class GameMovieCtrl : MonoBehaviour {
 		if (AudioListCtrl.GetInstance() != null) {
 			AudioListCtrl.GetInstance().CloseGameAudioBJ();
 		}
-		Cursor.visible = pcvr.bIsHardWare;
+		//Cursor.visible = pcvr.bIsHardWare;
 		LoadingGameCtrl.ResetLoadingInfo();
 		Time.timeScale = 1.0f;
 		CheckClientPortMovieInfo(1);

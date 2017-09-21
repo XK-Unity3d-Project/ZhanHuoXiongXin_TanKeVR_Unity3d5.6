@@ -714,7 +714,7 @@ public class SetPanelUiRoot : MonoBehaviour {
 		}
 
 		GunAdjustObj.SetActive(false);
-		Cursor.visible = pcvr.bIsHardWare;
+		//Cursor.visible = pcvr.bIsHardWare;
 		
 		IsMoveStar = true;
 		PanelStVal = PanelState.SetPanel;

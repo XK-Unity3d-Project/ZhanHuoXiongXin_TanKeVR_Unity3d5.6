@@ -274,7 +274,7 @@ public class XkGameCtrl : MonoBehaviour {
 			IsCartoonShootTest = false;
 			IsServerCameraTest = false;
 		}
-		Cursor.visible = pcvr.bIsHardWare;
+		//Cursor.visible = !pcvr.bIsHardWare;
 
 		if (IsServerCameraTest) {
 			IsCartoonShootTest = false;
